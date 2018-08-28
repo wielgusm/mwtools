@@ -206,6 +206,48 @@ def bandpass_amplitude_consistency(data,xmax=10):
     plt.show()
 
 
+def bandpass_amplitude_rel_consistency(data,xmax=10):
+
+    data_lo, data_hi = ut.match_frames(data[data.band=='lo'].copy(),data[data.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
+    data = data_lo.copy()
+    data['amp_lo'] = data['amp']
+    data['amp_hi'] = data_hi['amp']
+    data['sigma_lo'] = data['sigma']
+    data['sigma_hi'] = data_hi['sigma']
+    data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
+    data['amp_diff'] = data['amp_lo'] - data['amp_hi']
+    data['amp_mean'] = 0.5*(data['amp_lo'] + data['amp_hi'])
+    data['rel_diff'] = data['amp_diff']/data['amp_mean']
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.axvline(0,color='k')
+    plt.xlabel('0.5*(LO-HI)/(L0 + HI)')
+    plt.title('All data')
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    nplots=len(sourceL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    for cou,sour in enumerate(sourceL):
+        nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
+        bins = np.linspace(-10,10,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].xlabel('0.5*(LO-HI)/(L0 + HI)')
+        ax[nrowL,ncolL].set_title(sour)
+    plt.show()
+
+
 def polar_amplitude_consistency(data,xmax=10):
 
     data_rr, data_ll = ut.match_frames(data[data.polarization=='LL'].copy(),data[data.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
@@ -225,7 +267,7 @@ def polar_amplitude_consistency(data,xmax=10):
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
     plt.axvline(0,color='k')
-    plt.xlabel('(LO-HI)/(thermal error)')
+    plt.xlabel('(RR-LL)/(thermal error)')
     plt.title('All data')
     plt.show()
 
@@ -245,5 +287,48 @@ def polar_amplitude_consistency(data,xmax=10):
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
+        ax[nrowL,ncolL].set_title(sour)
+    plt.show()
+
+
+def polar_amplitude_rel_consistency(data,xmax=10):
+
+    data_rr, data_ll = ut.match_frames(data[data.polarization=='LL'].copy(),data[data.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
+    data = data_rr.copy()
+    data['amp_rr'] = data['amp']
+    data['amp_ll'] = data_ll['amp']
+    data['sigma_rr'] = data['sigma']
+    data['sigma_ll'] = data_ll['sigma']
+    data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
+    data['amp_diff'] = data['amp_rr'] - data['amp_ll']
+    data['rel_diff'] = 0.5*(data['amp_rr']+data['amp_ll'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('0.5*(RR-LL)/(RR+LL)')
+    plt.title('All data')
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    nplots=len(sourceL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    for cou,sour in enumerate(sourceL):
+        nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
+        bins = np.linspace(-10,10,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('0.5*(RR-LL)/(RR+LL)')
         ax[nrowL,ncolL].set_title(sour)
     plt.show()

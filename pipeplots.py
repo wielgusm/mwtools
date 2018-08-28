@@ -110,7 +110,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True,pal
                 if (couC==0):
                     ax[couC].legend(bbox_to_anchor=(-0.15, 1.52))
                 ax[couC].grid()
-                ax[couC].set_title(sour+' | '+str(int(exptD[couP])))
+                ax[couC].set_title(sour+' | '+str((exptD[couP])))
                 ax[couC].set_xlabel('UT time')
                 ax[couC].set_ylabel('amplitudes')
                 if logscale==True:

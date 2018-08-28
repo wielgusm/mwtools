@@ -65,10 +65,11 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
                 ax[couR,couC].set_ylim(ymax=2.*np.max(foo.amp))
                 couP+=1
     plt.tight_layout()
-    plt.show()
+    
     nscan=np.shape(foo)[0]
     nbase = len(foo.baseline.unique())
     print(sour)
     print("{} detections on {} baselines".format(nscan,nbase))
     print("median snr {}".format(np.median(foo.snr)))
     print("=========================================")
+    plt.show()

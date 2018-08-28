@@ -11,6 +11,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
     SMT2Z = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'PV':'P','SPT':'Y'}
     Z2SMT = {v: k for k, v in SMT2Z.items()}
     Z2SMT['P'] = 'IRAM30'
+    SMT2Zb = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'IRAM30':'P','SPT':'Y'}
 
     palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'mediumblue','APEX-LMT':'mediumblue',
         'SMT-SMA':'red','SMT-JCMT':'red','LMT-SMA':'cyan','JCMT-LMT':'cyan',
@@ -51,7 +52,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
 
                     foo2=foo1[foo1.baseline==base]
                     if ('ALMA' in base) or (('SMA' in base)&('JCMT' not in base)):
-                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Z[base.split('-')[0]]+SMT2Z[base.split('-')[1]])
+                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
                     else:
                         ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=base)
                 if (couR==0)&(couC==0):

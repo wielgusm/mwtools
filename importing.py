@@ -31,3 +31,38 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                 else:
                     pass         
     df.to_pickle(path_out+out_name+'.pic')
+
+def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
+    bandL=['lo','hi'],filend=".uvfits"):
+
+    if not os.path.exists(path_out):
+        os.makedirs(path_out) 
+    df = pd.DataFrame({})
+    #first all LL
+    for band in bandL:  
+        for expt in exptL:
+            path0 = path_data_0+'hops-'+band+'/'+data_subfolder+str(expt)+'/'
+            for filen in os.listdir(path0):
+                if filen.endswith(filend): 
+                    print('processing ', filen)
+                    if ('LL' in filen): 
+                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='no',band=band,round_s=0.1,only_parallel=True)
+                        df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        df = pd.concat([df,df_scan],ignore_index=True)
+                    else: continue         
+    dfLL = df.copy()
+    #then all RR
+    for band in bandL:  
+        for expt in exptL:
+            path0 = path_data_0+'hops-'+band+'/'+data_subfolder+str(expt)+'/'
+            for filen in os.listdir(path0):
+                if filen.endswith(filend): 
+                    print('processing ', filen)
+                    if ('RR' in filen): 
+                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='no',band=band,round_s=0.1,only_parallel=True)
+                        df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        df = pd.concat([df,df_scan],ignore_index=True)
+                    else: continue         
+    dfRR = df.copy()
+    df_full = pd.concat([dfLL,dfRR],ignore_index=True)
+    df_full.to_pickle(path_out+out_name+'.pic')

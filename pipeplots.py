@@ -64,7 +64,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
                 if logscale==True:
                     ax[couR,couC].set_yscale("log", nonposy='clip')
                 ax[couR,couC].set_ylim(ymin=0.1*np.min(foo.amp))
-                ax[couR,couC].set_ylim(ymax=1.2.*np.max(foo.amp))
+                ax[couR,couC].set_ylim(ymax=1.2*np.max(foo.amp))
                 couP+=1
     plt.tight_layout()
     

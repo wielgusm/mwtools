@@ -247,6 +247,7 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
         #ax[nrowL,ncolL].set_xlim([-xmax,xmax])
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
+    return data
 
 
 def polar_amplitude_consistency(data,xmax=10):
@@ -290,6 +291,7 @@ def polar_amplitude_consistency(data,xmax=10):
         ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
+    return data
 
 
 def polar_amplitude_rel_consistency(data,xmax=2.):
@@ -331,3 +333,4 @@ def polar_amplitude_rel_consistency(data,xmax=2.):
         ax[nrowL,ncolL].set_xlabel('2*(RR-LL)/(RR+LL)')
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
+    return data

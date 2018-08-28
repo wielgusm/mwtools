@@ -56,7 +56,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
                     else:
                         ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
                 if (couR==0)&(couC==0):
-                    ax[couR,couC].legend(bbox_to_anchor=(-0.2, 1.52))
+                    ax[couR,couC].legend(bbox_to_anchor=(-0.15, 1.52))
                 ax[couR,couC].grid()
                 ax[couR,couC].set_title(sour+' | '+str(exptD[couP]))
                 ax[couR,couC].set_xlabel('UT time')

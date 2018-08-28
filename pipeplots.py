@@ -172,8 +172,8 @@ def bandpass_amplitude_consistency(data,xmax=10):
     data['sigma_lo'] = data['sigma']
     data['sigma_hi'] = data_hi['sigma']
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
-    data['amp_diff'] = data['amp_lo'] - data['amp_hi']
-    data['rel_diff'] = data['amp_diff']/data['sigma']
+    data['amp_diff'] = np.asarray(data['amp_lo']) - np.asarray(data['amp_hi'])
+    data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['sigma'])
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -204,6 +204,7 @@ def bandpass_amplitude_consistency(data,xmax=10):
         ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
+    return data
 
 
 def bandpass_amplitude_rel_consistency(data,xmax=2.):
@@ -215,9 +216,9 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
     data['sigma_lo'] = data['sigma']
     data['sigma_hi'] = data_hi['sigma']
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
-    data['amp_diff'] = data['amp_lo'] - data['amp_hi']
-    data['amp_mean'] = 0.5*(data['amp_lo'] + data['amp_hi'])
-    data['rel_diff'] = data['amp_diff']/data['amp_mean']
+    data['amp_diff'] = np.asarray(data['amp_lo']) - np.asarray(data['amp_hi'])
+    data['amp_mean'] = 0.5*(np.asarray(data['amp_lo']) + np.asarray(data['amp_hi']))
+    data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['amp_mean'])
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)

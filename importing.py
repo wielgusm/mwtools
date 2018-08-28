@@ -68,7 +68,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
     df_full.to_pickle(path_out+out_name+'.pic')
 
 
-    def import_uvfits_set_netcal2(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
+def import_uvfits_set_netcal2(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
     bandL=['lo','hi'],filend=".uvfits"):
 
     if not os.path.exists(path_out):

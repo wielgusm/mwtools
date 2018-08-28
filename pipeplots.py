@@ -6,7 +6,7 @@ from eat.hops import util as hu
 import matplotlib.pyplot as plt
 from eat.inspect import utils as ut
 
-def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
+def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
 
     SMT2Z = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'PV':'P','SPT':'Y'}
     Z2SMT = {v: k for k, v in SMT2Z.items()}
@@ -61,7 +61,8 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
                 ax[couR,couC].set_title(sour+' | '+str(exptD[couP]))
                 ax[couR,couC].set_xlabel('UT time')
                 ax[couR,couC].set_ylabel('amplitudes')
-                ax[couR,couC].set_yscale("log", nonposy='clip')
+                if logscale==True:
+                    ax[couR,couC].set_yscale("log", nonposy='clip')
                 ax[couR,couC].set_ylim(ymin=0.1*np.min(foo.amp))
                 ax[couR,couC].set_ylim(ymax=2.*np.max(foo.amp))
                 couP+=1

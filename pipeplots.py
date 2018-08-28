@@ -208,7 +208,7 @@ def bandpass_amplitude_consistency(data,xmax=10):
 
 def polar_amplitude_consistency(data,xmax=10):
 
-    data_rr, data_ll = ut.match_frames(data[data.polarization=='LL'].copy(),data[data.polarization=='RR'].copy(),['scan_id','baseline','polarization','source'])
+    data_rr, data_ll = ut.match_frames(data[data.polarization=='LL'].copy(),data[data.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
     data = data_rr.copy()
     data['amp_rr'] = data['amp']
     data['amp_ll'] = data_ll['amp']

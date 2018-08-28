@@ -25,20 +25,21 @@ dict_col_sour = {'1055+018': 'tan',
      'OJ287': 'gold',
      'SGRA': 'red'}
 
+SMT2Z = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'PV':'P','SPT':'Y'}
+Z2SMT = {v: k for k, v in SMT2Z.items()}
+Z2SMT['P'] = 'IRAM30'
+SMT2Zb = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'IRAM30':'P','SPT':'Y'}
+
+palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'mediumblue','APEX-LMT':'mediumblue',
+    'SMT-SMA':'red','SMT-JCMT':'red','LMT-SMA':'cyan','JCMT-LMT':'cyan',
+    'ALMA-SMT':'magenta','APEX-SMT':'magenta','ALMA-SPT':'blueviolet','APEX-SPT':'blueviolet',
+    'ALMA-IRAM30':'orange','APEX-IRAM30':'orange','ALMA-SMA':'darkgreen','ALMA-JCMT':'darkgreen','APEX-SMA':'darkgreen','APEX-JCMT':'darkgreen',
+    'LMT-SPT':'yellow','LMT-IRAM30':'tomato','SMA-SPT':'olivedrab','JCMT-SPT':'olivedrab',
+    'SMT-SPT':'salmon', 'IRAM30-SPT':'saddlebrown','IRAM30-SMA':'tan','JCMT-IRAM30':'tan',
+    'SMT-IRAM30':'dodgerblue'}
+
 def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
 
-    SMT2Z = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'PV':'P','SPT':'Y'}
-    Z2SMT = {v: k for k, v in SMT2Z.items()}
-    Z2SMT['P'] = 'IRAM30'
-    SMT2Zb = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'IRAM30':'P','SPT':'Y'}
-
-    palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'mediumblue','APEX-LMT':'mediumblue',
-        'SMT-SMA':'red','SMT-JCMT':'red','LMT-SMA':'cyan','JCMT-LMT':'cyan',
-        'ALMA-SMT':'magenta','APEX-SMT':'magenta','ALMA-SPT':'blueviolet','APEX-SPT':'blueviolet',
-        'ALMA-IRAM30':'orange','APEX-IRAM30':'orange','ALMA-SMA':'darkgreen','ALMA-JCMT':'darkgreen','APEX-SMA':'darkgreen','APEX-JCMT':'darkgreen',
-        'LMT-SPT':'yellow','LMT-IRAM30':'tomato','SMA-SPT':'olivedrab','JCMT-SPT':'olivedrab',
-        'SMT-SPT':'salmon', 'IRAM30-SPT':'saddlebrown','IRAM30-SMA':'tan','JCMT-IRAM30':'tan',
-        'SMT-IRAM30':'dodgerblue'}
     palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
     palette_dict = {**palette_dict, **palette_dict_rev}
     
@@ -50,15 +51,47 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
     exptL=list(foo.expt_no.unique())
     nplots=(len(exptL)+1)
     ncols=2
-    nrows=np.maximum(2,int(np.ceil(nplots/ncols)))
+    #nrows=np.maximum(2,int(np.ceil(nplots/ncols)))
+    nrows=int(np.ceil(nplots/ncols))
 
     if 'uvdist' not in foo.columns:
         foo['uvdist'] = np.sqrt(foo['u']**2 + foo['v']**2)
     exptD = dict(zip(range(nplots),['all']+exptL))
 
-    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
-    couP = 0 
-    for couR in range(nrows):
+    if nrows>1:
+        fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+        couP = 0 
+        for couR in range(nrows):
+            for couC in range(ncols):
+                if couP<nplots:
+                    exptLoc = exptD[couP]
+                    if exptLoc=='all':
+                        foo1 = foo
+                    else:
+                        foo1=foo[foo.expt_no==exptLoc]
+
+                    for base in list(foo1.baseline.unique()):
+
+                        foo2=foo1[foo1.baseline==base]
+                        if ('ALMA' in base) or (('SMA' in base)&('JCMT' not in base)):
+                            ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+                        else:
+                            ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+                    if (couR==0)&(couC==0):
+                        ax[couR,couC].legend(bbox_to_anchor=(-0.15, 1.52))
+                    ax[couR,couC].grid()
+                    ax[couR,couC].set_title(sour+' | '+str(int(exptD[couP])))
+                    ax[couR,couC].set_xlabel('UT time')
+                    ax[couR,couC].set_ylabel('amplitudes')
+                    if logscale==True:
+                        ax[couR,couC].set_yscale("log", nonposy='clip')
+                    ax[couR,couC].set_ylim(ymin=0.1*np.min(foo.amp))
+                    ax[couR,couC].set_ylim(ymax=1.1*np.max(foo.amp))
+                    couP+=1
+        plt.tight_layout()
+    else:
+        fig, ax = plt.subplots(ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+        couP = 0 
         for couC in range(ncols):
             if couP<nplots:
                 exptLoc = exptD[couP]
@@ -71,21 +104,21 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
 
                     foo2=foo1[foo1.baseline==base]
                     if ('ALMA' in base) or (('SMA' in base)&('JCMT' not in base)):
-                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+                        ax[couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
                     else:
-                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
-                if (couR==0)&(couC==0):
-                    ax[couR,couC].legend(bbox_to_anchor=(-0.15, 1.52))
-                ax[couR,couC].grid()
-                ax[couR,couC].set_title(sour+' | '+str(exptD[couP]))
-                ax[couR,couC].set_xlabel('UT time')
-                ax[couR,couC].set_ylabel('amplitudes')
+                        ax[couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+                if (couC==0):
+                    ax[couC].legend(bbox_to_anchor=(-0.15, 1.52))
+                ax[couC].grid()
+                ax[couC].set_title(sour+' | '+str(int(exptD[couP])))
+                ax[couC].set_xlabel('UT time')
+                ax[couC].set_ylabel('amplitudes')
                 if logscale==True:
-                    ax[couR,couC].set_yscale("log", nonposy='clip')
-                ax[couR,couC].set_ylim(ymin=0.1*np.min(foo.amp))
-                ax[couR,couC].set_ylim(ymax=1.1*np.max(foo.amp))
+                    ax[couC].set_yscale("log", nonposy='clip')
+                ax[couC].set_ylim(ymin=0.1*np.min(foo.amp))
+                ax[couC].set_ylim(ymax=1.1*np.max(foo.amp))
                 couP+=1
-    plt.tight_layout()
+        plt.tight_layout()
     
     nscan=np.shape(foo)[0]
     nbase = len(foo.baseline.unique())

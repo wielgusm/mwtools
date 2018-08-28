@@ -90,7 +90,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True,pal
                     couP+=1
         plt.tight_layout()
     else:
-        fig, ax = plt.subplots(ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+        fig, ax = plt.subplots(1,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
         couP = 0 
         for couC in range(ncols):
             if couP<nplots:

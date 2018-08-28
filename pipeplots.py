@@ -71,4 +71,4 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
     print(sour)
     print("{} detections on {} baselines".format(nscan,nbase))
     print("median snr {}".format(np.median(foo.snr)))
-    PRINT("=========================================")
+    print("=========================================")

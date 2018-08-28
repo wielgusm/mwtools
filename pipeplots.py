@@ -96,7 +96,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
     plt.show()
 
 
-def compare_uvf_apc(apc,uvf):
+def compare_uvf_apc(apc_sc,uvf_sc):
 
     uvf,apc=ut.match_frames(uvf_sc.copy(),apc_sc.copy(),['source','band','polarization','scan_id','baseline'])
     apc['var_before'] = uvf['std_by_mean']

@@ -165,7 +165,7 @@ def compare_uvf_apc(apc_sc,uvf_sc):
 
 def bandpass_amplitude_consistency(data0,xmax=10):
 
-    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
+    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
     data = data_lo.copy()
     data['amp_lo'] = data_lo['amp']
     data['amp_hi'] = data_hi['amp']
@@ -209,7 +209,7 @@ def bandpass_amplitude_consistency(data0,xmax=10):
 
 def bandpass_amplitude_rel_consistency(data0,xmax=2.):
 
-    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
+    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
     data = data_lo.copy()
     data['amp_lo'] = data_lo['amp']
     data['amp_hi'] = data_hi['amp']
@@ -252,7 +252,7 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.):
 
 def polar_amplitude_consistency(data0,xmax=10):
 
-    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
+    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band'])
     data = data_rr.copy()
     data['amp_rr'] = data_rr['amp']
     data['amp_ll'] = data_ll['amp']
@@ -296,7 +296,7 @@ def polar_amplitude_consistency(data0,xmax=10):
 
 def polar_amplitude_rel_consistency(data0,xmax=2.):
 
-    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
+    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band'])
     data = data_rr.copy()
     data['amp_rr'] = data_rr['amp']
     data['amp_ll'] = data_ll['amp']

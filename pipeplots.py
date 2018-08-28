@@ -243,7 +243,7 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('2*(LO-HI)/(L0 + HI)')
-        ax[nrowL,ncolL].set_xlim([-xmax,xmax])
+        #ax[nrowL,ncolL].set_xlim([-xmax,xmax])
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
 

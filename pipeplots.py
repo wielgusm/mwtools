@@ -167,9 +167,9 @@ def bandpass_amplitude_consistency(data0,xmax=10):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
     data = data_lo.copy()
-    data['amp_lo'] = data['amp']
+    data['amp_lo'] = data_lo['amp']
     data['amp_hi'] = data_hi['amp']
-    data['sigma_lo'] = data['sigma']
+    data['sigma_lo'] = data_lo['sigma']
     data['sigma_hi'] = data_hi['sigma']
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
     data['amp_diff'] = np.asarray(data['amp_lo']) - np.asarray(data['amp_hi'])
@@ -211,9 +211,9 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
     data = data_lo.copy()
-    data['amp_lo'] = data['amp']
+    data['amp_lo'] = data_lo['amp']
     data['amp_hi'] = data_hi['amp']
-    data['sigma_lo'] = data['sigma']
+    data['sigma_lo'] = data_lo['sigma']
     data['sigma_hi'] = data_hi['sigma']
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
     data['amp_diff'] = np.asarray(data['amp_lo']) - np.asarray(data['amp_hi'])
@@ -254,9 +254,9 @@ def polar_amplitude_consistency(data0,xmax=10):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
     data = data_rr.copy()
-    data['amp_rr'] = data['amp']
+    data['amp_rr'] = data_rr['amp']
     data['amp_ll'] = data_ll['amp']
-    data['sigma_rr'] = data['sigma']
+    data['sigma_rr'] = data_rr['sigma']
     data['sigma_ll'] = data_ll['sigma']
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['amp_diff'] = data['amp_rr'] - data['amp_ll']
@@ -298,9 +298,9 @@ def polar_amplitude_rel_consistency(data0,xmax=2.):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
     data = data_rr.copy()
-    data['amp_rr'] = data['amp']
+    data['amp_rr'] = data_rr['amp']
     data['amp_ll'] = data_ll['amp']
-    data['sigma_rr'] = data['sigma']
+    data['sigma_rr'] = data_rr['sigma']
     data['sigma_ll'] = data_ll['sigma']
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['amp_diff'] = data['amp_rr'] - data['amp_ll']

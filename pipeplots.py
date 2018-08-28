@@ -38,11 +38,11 @@ palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'medi
     'SMT-SPT':'salmon', 'IRAM30-SPT':'saddlebrown','IRAM30-SMA':'tan','JCMT-IRAM30':'tan',
     'SMT-IRAM30':'dodgerblue'}
 
+palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
+    palette_dict = {**palette_dict, **palette_dict_rev}
+
 def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True):
 
-    palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
-    palette_dict = {**palette_dict, **palette_dict_rev}
-    
     if only_parallel==True:
         foo=data[(data.source==sour)&(data.polarization.str[0]==data.polarization.str[1])].copy()
     else:

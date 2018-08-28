@@ -54,7 +54,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True):
                     if ('ALMA' in base) or (('SMA' in base)&('JCMT' not in base)):
                         ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
                     else:
-                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=base)
+                        ax[couR,couC].errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
                 if (couR==0)&(couC==0):
                     ax[couR,couC].legend(bbox_to_anchor=(-0.2, 1.52))
                 ax[couR,couC].grid()

@@ -33,7 +33,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
     df.to_pickle(path_out+out_name+'.pic')
 
 def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],filend=".uvfits"):
+    bandL=['lo','hi'],filend=".uvfits",incoh_avg=False):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -46,7 +46,10 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                 if filen.endswith(filend): 
                     df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='no',band=band,round_s=0.1,only_parallel=True)
                     if tavg!=-1:
-                        df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        if incoh_avg==False:
+                            df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        else:
+                            df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                         df = pd.concat([df,df_scan],ignore_index=True) 
                     else:
                         print('no averaging')

@@ -194,7 +194,7 @@ def bandpass_amplitude_consistency(data,xmax=10):
 
     for cou,sour in enumerate(sourceL):
         nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
-        bins = np.linspace(-10,10,nbins)
+        bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
@@ -236,7 +236,7 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
 
     for cou,sour in enumerate(sourceL):
         nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
-        bins = np.linspace(-10,10,nbins)
+        bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
@@ -279,7 +279,7 @@ def polar_amplitude_consistency(data,xmax=10):
 
     for cou,sour in enumerate(sourceL):
         nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
-        bins = np.linspace(-10,10,nbins)
+        bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
@@ -321,7 +321,7 @@ def polar_amplitude_rel_consistency(data,xmax=2.):
 
     for cou,sour in enumerate(sourceL):
         nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
-        bins = np.linspace(-10,10,nbins)
+        bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)

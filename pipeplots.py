@@ -206,7 +206,7 @@ def bandpass_amplitude_consistency(data,xmax=10):
     plt.show()
 
 
-def bandpass_amplitude_rel_consistency(data,xmax=10):
+def bandpass_amplitude_rel_consistency(data,xmax=2.):
 
     data_lo, data_hi = ut.match_frames(data[data.band=='lo'].copy(),data[data.band=='hi'].copy(),['scan_id','baseline','polarization','source'])
     data = data_lo.copy()
@@ -290,7 +290,7 @@ def polar_amplitude_consistency(data,xmax=10):
     plt.show()
 
 
-def polar_amplitude_rel_consistency(data,xmax=10):
+def polar_amplitude_rel_consistency(data,xmax=2.):
 
     data_rr, data_ll = ut.match_frames(data[data.polarization=='LL'].copy(),data[data.polarization=='RR'].copy(),['scan_id','baseline','band','source'])
     data = data_rr.copy()
@@ -300,7 +300,8 @@ def polar_amplitude_rel_consistency(data,xmax=10):
     data['sigma_ll'] = data_ll['sigma']
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['amp_diff'] = data['amp_rr'] - data['amp_ll']
-    data['rel_diff'] = 0.5*(data['amp_rr']+data['amp_ll'])
+    data['amp_mean'] = 0.5*(data['amp_rr']+data['amp_ll'])
+    data['rel_diff'] = data['amp_diff']/data['amp_mean']
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)

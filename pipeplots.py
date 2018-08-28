@@ -224,7 +224,7 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.axvline(0,color='k')
-    plt.xlabel('0.5*(LO-HI)/(L0 + HI)')
+    plt.xlabel('2*(LO-HI)/(L0 + HI)')
     plt.title('All data')
     plt.show()
 
@@ -242,7 +242,8 @@ def bandpass_amplitude_rel_consistency(data,xmax=2.):
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
-        ax[nrowL,ncolL].set_xlabel('0.5*(LO-HI)/(L0 + HI)')
+        ax[nrowL,ncolL].set_xlabel('2*(LO-HI)/(L0 + HI)')
+        ax[nrowL,ncolL].set_xlim([-xmax,xmax])
         ax[nrowL,ncolL].set_title(sour)
     plt.show()
 
@@ -308,7 +309,7 @@ def polar_amplitude_rel_consistency(data,xmax=2.):
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.axvline(0,color='k')
-    plt.xlabel('0.5*(RR-LL)/(RR+LL)')
+    plt.xlabel('2*(RR-LL)/(RR+LL)')
     plt.title('All data')
     plt.show()
 
@@ -326,6 +327,6 @@ def polar_amplitude_rel_consistency(data,xmax=2.):
         ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
-        ax[nrowL,ncolL].set_xlabel('0.5*(RR-LL)/(RR+LL)')
+        ax[nrowL,ncolL].set_xlabel('2*(RR-LL)/(RR+LL)')
         ax[nrowL,ncolL].set_title(sour)
     plt.show()

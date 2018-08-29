@@ -61,6 +61,7 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     plt.xlabel('snr')
     plt.ylabel('detections')
     plt.grid()
+    plt.title(sour)
     plt.legend()
     plt.show()
 

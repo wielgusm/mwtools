@@ -543,5 +543,5 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
-        plt.show()
+    plt.show()
     return data

@@ -271,7 +271,7 @@ def bandpass_amplitude_consistency(data0,xmax=10):
     return data
 
 
-def bandpass_cphase_consistency(data0,xmax=10):
+def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','triangle','polarization'])
     data = data_lo.copy()
@@ -300,12 +300,14 @@ def bandpass_cphase_consistency(data0,xmax=10):
     nrows=int(np.ceil(nplots/ncols))
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
 
-    for cou,sour in enumerate(sourceL):
-        nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
+    whatL = sorted(list(data[by_what].unique()))
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
         bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
-        ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
         ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')

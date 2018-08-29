@@ -632,8 +632,6 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     plt.show()
     return data
 
-
-
 def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','quadrangle','polarization'])
@@ -691,3 +689,63 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
     plt.show()
     return data
+
+
+def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
+
+    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
+    data = data_lo.copy()
+    data['lcamp_rr'] = data_rr['camp']
+    data['lcamp_ll'] = data_ll['camp']
+    data['sigma_rr'] = data_lo['sigmaCA']
+    data['sigma_ll'] = data_hi['sigmaCA']
+    data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
+    data['lcamp_diff'] = data['lcamp_rr'] - data['lcamp_ll']
+    data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(RR-LL)/(thermal error)')
+    plt.title('All data')
+    mad_abs=np.median(np.abs(data['lcamp_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+    
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
+        ax[nrowL,ncolL].set_title(what)
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['lcamp_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+    return data
+

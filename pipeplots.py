@@ -166,7 +166,7 @@ def compare_uvf_apc(apc_sc,uvf_sc):
     return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
 
 
-def compare_coherence_time(coh0,incoh0):
+def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour):
     coh,incoh = ut.match_frames(coh0,incoh0,['scan_id','baseline','polarization','band'])
 
     coh['amp_coh'] = np.sqrt(coh['amp']**2 - coh['sigma']**2)
@@ -189,17 +189,17 @@ def compare_coherence_time(coh0,incoh0):
         sg=sns.lmplot(data=data,x='amp_coh',y='amp_incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
                      palette=dict_col_sour)
         ax1 = sg.fig.axes[0]
-        hm1y=ax1.get_ylim()
-        hm1x=ax1.get_xlim()
+        #hm1y=ax1.get_ylim()
+        #hm1x=ax1.get_xlim()
         ax1.plot([0,max_plot],[0,max_plot],'k--')
-        ax1.set_ylim(hm1y)
-        ax1.set_xlim(hm1x)
+        #ax1.set_ylim(hm1y)
+        #ax1.set_xlim(hm1x)
         ax2 = sg.fig.axes[1]
-        hm2x=ax2.get_xlim()
-        hm2y=ax2.get_ylim()
+        #hm2x=ax2.get_xlim()
+        #hm2y=ax2.get_ylim()
         ax2.plot([0,max_plot],[0,max_plot],'k--')
-        ax2.set_ylim(hm2y)
-        ax2.set_xlim(hm2x)
+        #ax2.set_ylim(hm2y)
+        #ax2.set_xlim(hm2x)
         plt.show()
 
     return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()

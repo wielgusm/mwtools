@@ -395,7 +395,7 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('2*(LO-HI)/(L0 + HI)')
         #ax[nrowL,ncolL].set_xlim([-xmax,xmax])
-        ax[nrowL,ncolL].set_title(sour)
+        ax[nrowL,ncolL].set_title(what)
 
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))

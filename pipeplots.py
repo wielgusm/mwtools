@@ -266,11 +266,11 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
 
     for cou,what in enumerate(whatL):
-        nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
         bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
-        ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
         ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')

@@ -441,7 +441,7 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
 
     sourceL = sorted(list(data.source.unique()))
     whatL = sorted(list(data[by_what].unique()))
-    nplots=len(sourceL)
+    nplots=len(whatL)
     ncols=2
     nrows=int(np.ceil(nplots/ncols))
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
@@ -503,7 +503,7 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
     sourceL = sorted(list(data.source.unique()))
     whatL = sorted(list(data[by_what].unique()))
-    nplots=len(sourceL)
+    nplots=len(whatL)
     ncols=2
     nrows=int(np.ceil(nplots/ncols))
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))

@@ -280,8 +280,8 @@ def bandpass_cphase_consistency(data0,xmax=10):
     data['sigma_lo'] = data_lo['sigmaCP']
     data['sigma_hi'] = data_hi['sigmaCP']
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
-    data['sigma_diff'] = np.angle(np.exp(1j*(data['cphase_lo'] - data['cphase_hi'])*np.pi/180))*180./np.pi
-    data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['sigma'])
+    data['cphase_diff'] = np.angle(np.exp(1j*(data['cphase_lo'] - data['cphase_hi'])*np.pi/180))*180./np.pi
+    data['rel_diff'] = np.asarray(data['cphase_diff'])/np.asarray(data['sigma'])
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)

@@ -170,9 +170,9 @@ def compare_uvf_apc(apc_sc,uvf_sc):
     return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
 
 
-def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour):
-    coh,incoh = ut.match_frames(coh0.copy(),incoh0.copy(),['scan_id','baseline','polarization','band'])
-    print(np.shape(coh),np.shape(incoh))
+def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0):
+    coh,incoh = ut.match_frames(coh0[coh0.snr>snr_cut].copy(),incoh0[incoh0.snr>snr_cut].copy(),['scan_id','baseline','polarization','band'])
+    #print(np.shape(coh),np.shape(incoh))
     coh['amp_coh'] = np.sqrt(np.maximum(0,coh['amp']**2 - coh['sigma']**2))
     coh['amp_incoh'] = incoh['amp']
     coh['sigma_coh'] = coh['sigma']

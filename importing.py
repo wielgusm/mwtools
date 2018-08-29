@@ -4,7 +4,7 @@ from eat.inspect import utils as ut
 import os
 
 def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],only_parallel=True,filend=".uvfits"):
+    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False):
 
     #path_vex= '/home/maciek/VEX/'
     #path_out = '/home/maciek/import_data/er4/'
@@ -25,7 +25,10 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                         if 'std_by_mean' in df_foo.columns:
                             df_foo.drop('std_by_mean',axis=1,inplace=True)
                         df_foo['std_by_mean'] = df_foo['amp']
-                        df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        if incoh_avg=False:
+                            df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                        else:
+                            df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                         df = pd.concat([df,df_scan.copy()],ignore_index=True)
                     except: pass
                 else:

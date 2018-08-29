@@ -54,7 +54,7 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     print("median snr {}".format(np.median(foo.snr)))
     print("=========================================")
 
-    bins = np.logspace(0,1.2*np.max(foo.snr),nscan)
+    bins = np.logspace(0,np.log(1.2*np.max(foo.snr)),nscan)
     plt.hist(foo.snr,bins=bins,histtype='step',linewidth=2,density=False)
     plt.xscale('log')
     plt.xlabel('snr')

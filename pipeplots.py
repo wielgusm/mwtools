@@ -55,10 +55,12 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     print("=========================================")
 
     bins = np.logspace(0,1.1*np.log10(np.max(foo.snr)),np.sqrt(nscan))
-    plt.hist(foo.snr,bins=bins,histtype='step',linewidth=2,density=False)
+    plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='non-ALMA baselines')
+    plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='ALMA baselines')
     plt.xscale('log')
     plt.xlabel('snr')
     plt.ylabel('detections')
+    plt.legend()
     plt.show()
 
     

@@ -161,6 +161,10 @@ def compare_uvf_apc(apc_sc,uvf_sc):
         ax2.plot([0,max_plot],[0,max_plot],'k--')
         ax2.set_ylim(hm2y)
         ax2.set_xlim(hm2x)
+
+        for lh in sg._legend.legendHandles: 
+            lh.set_alpha(1)
+            lh._sizes = [50] 
         plt.show()
 
     return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
@@ -202,6 +206,9 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour):
         ax2.plot(hm2x,[1,1],'k--')
         #ax2.set_ylim(hm2y)
         #ax2.set_xlim(hm2x)
+        for lh in sg._legend.legendHandles: 
+            lh.set_alpha(1)
+            lh._sizes = [50] 
         plt.show()
 
     return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()

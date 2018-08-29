@@ -189,6 +189,8 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0):
     coh['sigma_coh'] = coh['sigma']
     coh['sigma_incoh'] = incoh['sigma']
     coh['coh2incoh'] = coh['amp_coh']/coh['amp_incoh']
+    coh['snr_coh'] = coh['snr']
+    coh['snr_incoh'] = incoh['snr']
     data=coh.copy()
     sns.set_style('whitegrid')
     baseL = sorted(list(data.baseline.unique()))
@@ -222,7 +224,7 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0):
             lh._sizes = [50] 
         plt.show()
 
-    return coh[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()
+    return coh[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','snr_coh','snr_incoh']].copy()
 
 
 def bandpass_amplitude_consistency(data0,xmax=10):

@@ -803,7 +803,7 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     return data
 
 
-def trivial_cphase(data0,xmax=10,by_what='source'):
+def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
 
     data = cl.only_trivial_triangles(data0, whichB=whichB)
     data=data.copy()

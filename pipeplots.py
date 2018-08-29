@@ -273,7 +273,7 @@ def bandpass_amplitude_consistency(data0,xmax=10):
 
 def bandpass_cphase_consistency(data0,xmax=10):
 
-    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
+    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','triangle','polarization'])
     data = data_lo.copy()
     data['cphase_lo'] = data_lo['cphase']
     data['cphase_hi'] = data_hi['cphase']

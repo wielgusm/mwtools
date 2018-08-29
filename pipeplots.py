@@ -134,6 +134,7 @@ def compare_uvf_apc(apc_sc,uvf_sc):
     uvf,apc=ut.match_frames(uvf_sc.copy(),apc_sc.copy(),['source','band','polarization','scan_id','baseline'])
     apc['var_before'] = uvf['std_by_mean']
     apc['var_after'] = apc['std_by_mean']
+    apc['after2before'] = apc['var_after']/apc['var_before']
     data=apc.copy()
     sns.set_style('whitegrid')
     baseL = sorted(list(data.baseline.unique()))
@@ -161,6 +162,47 @@ def compare_uvf_apc(apc_sc,uvf_sc):
         ax2.set_ylim(hm2y)
         ax2.set_xlim(hm2x)
         plt.show()
+
+    return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
+
+
+def compare_coherence_time(coh0,incoh0):
+    coh,incoh = ut.match_frames(coh0,incoh0,['scan_id','baseline','polarization','band'])
+
+    coh['amp_coh'] = np.sqrt(coh['amp']**2 - coh['sigma']**2)
+    coh['amp_incoh'] = incoh['amp']
+    coh['sigma_coh'] = coh['sigma']
+    coh['sigma_incoh'] = incoh['sigma']
+    coh['coh2incoh'] = coh['amp_coh']/coh['amp_incoh']
+    data=coh.copy()
+    sns.set_style('whitegrid')
+    baseL = sorted(list(data.baseline.unique()))
+    ncol = int(np.ceil(len(baseL)/2))
+    num_base = (np.ceil((np.asarray(range(2*ncol))+0.1)/2))
+    diccol=dict(zip(baseL,num_base))
+    apc['basenum'] = list(map(lambda x: diccol[x],apc.baseline))
+
+    for basenum in sorted(apc.basenum.unique()):
+        data=apc[apc.basenum==basenum]
+        max_plot = np.maximum(np.max(data.var_before),np.max(data.var_after))
+        min_plot = np.minimum(np.min(data.var_before),np.min(data.var_after))
+        sg=sns.lmplot(data=data,x='amp_coh',y='amp_incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
+                     palette=dict_col_sour)
+        ax1 = sg.fig.axes[0]
+        hm1y=ax1.get_ylim()
+        hm1x=ax1.get_xlim()
+        ax1.plot([0,max_plot],[0,max_plot],'k--')
+        ax1.set_ylim(hm1y)
+        ax1.set_xlim(hm1x)
+        ax2 = sg.fig.axes[1]
+        hm2x=ax2.get_xlim()
+        hm2y=ax2.get_ylim()
+        ax2.plot([0,max_plot],[0,max_plot],'k--')
+        ax2.set_ylim(hm2y)
+        ax2.set_xlim(hm2x)
+        plt.show()
+
+    return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()
 
 
 def bandpass_amplitude_consistency(data0,xmax=10):

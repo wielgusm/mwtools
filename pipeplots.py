@@ -148,7 +148,7 @@ def compare_uvf_apc(apc_sc,uvf_sc):
         max_plot = np.maximum(np.max(data.var_before),np.max(data.var_after))
         min_plot = np.minimum(np.min(data.var_before),np.min(data.var_after))
         sg=sns.lmplot(data=data,x='var_before',y='var_after',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
-                     palette=dict_col_sour,alpha=0.3)
+                     palette=dict_col_sour, scatter_kws={'alpha':0.3})
         ax1 = sg.fig.axes[0]
         hm1y=ax1.get_ylim()
         hm1x=ax1.get_xlim()
@@ -189,7 +189,7 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour):
         #sg=sns.lmplot(data=data,x='amp_coh',y='amp_incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
         #             palette=dict_col_sour)
         sg=sns.lmplot(data=data,x='scan_id',y='coh2incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
-                    palette=dict_col_sour,alpha=0.3)
+                    palette=dict_col_sour, scatter_kws={'alpha':0.3})
         ax1 = sg.fig.axes[0]
         hm1y=ax1.get_ylim()
         hm1x=ax1.get_xlim()

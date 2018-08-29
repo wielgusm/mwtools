@@ -41,12 +41,20 @@ palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'medi
 palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
 palette_dict = {**palette_dict, **palette_dict_rev}
 
-def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True,palette_dict=palette_dict):
+def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict):
 
-    if only_parallel==True:
-        foo=data[(data.source==sour)&(data.polarization.str[0]==data.polarization.str[1])].copy()
-    else:
-        foo=data[(data.source==sour)].copy()
+    data = data[list(map(lambda x: x in polarizations, data.polarization))]
+    data = data[list(map(lambda x: x in bands, data.band))]
+    foo = data[data.source==sour].copy()
+
+    nscan=np.shape(foo)[0]
+    nbase = len(foo.baseline.unique())
+    print(sour)
+    print("{} detections on {} baselines".format(nscan,nbase))
+    print("median snr {}".format(np.median(foo.snr)))
+    print("=========================================")
+
+    
     foo['baseline']=list(map(lambda x: Z2SMT[x[0]]+'-'+Z2SMT[x[1]],foo.baseline))
     exptL=list(foo.expt_no.unique())
     nplots=(len(exptL)+1)
@@ -119,13 +127,6 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True,pal
                 ax[couC].set_ylim(ymax=1.1*np.max(foo.amp))
                 couP+=1
         plt.tight_layout()
-    
-    nscan=np.shape(foo)[0]
-    nbase = len(foo.baseline.unique())
-    print(sour)
-    print("{} detections on {} baselines".format(nscan,nbase))
-    print("median snr {}".format(np.median(foo.snr)))
-    print("=========================================")
     plt.show()
 
 

@@ -25,7 +25,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                         if 'std_by_mean' in df_foo.columns:
                             df_foo.drop('std_by_mean',axis=1,inplace=True)
                         df_foo['std_by_mean'] = df_foo['amp']
-                        if incoh_avg=False:
+                        if incoh_avg==False:
                             df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                         else:
                             df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')

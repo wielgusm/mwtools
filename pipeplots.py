@@ -156,13 +156,20 @@ def compare_uvf_apc(apc_sc,uvf_sc,by_scan_id=False):
         ax1 = sg.fig.axes[0]
         hm1y=ax1.get_ylim()
         hm1x=ax1.get_xlim()
-        ax1.plot([0,max_plot],[0,max_plot],'k--')
-        ax1.set_ylim(hm1y)
-        ax1.set_xlim(hm1x)
+        
         ax2 = sg.fig.axes[1]
         hm2x=ax2.get_xlim()
         hm2y=ax2.get_ylim()
-        ax2.plot([0,max_plot],[0,max_plot],'k--')
+        
+        if by_scan_id==False:
+            ax1.plot([0,max_plot],[0,max_plot],'k--')
+            ax2.plot([0,max_plot],[0,max_plot],'k--')
+        else:
+            ax1.plot(hm1x,[1,1],'k--')
+            ax2.plot(hm1x,[1,1],'k--')
+        
+        ax1.set_ylim(hm1y)
+        ax1.set_xlim(hm1x)
         ax2.set_ylim(hm2y)
         ax2.set_xlim(hm2x)
 

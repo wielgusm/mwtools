@@ -180,10 +180,10 @@ def compare_coherence_time(coh0,incoh0):
     ncol = int(np.ceil(len(baseL)/2))
     num_base = (np.ceil((np.asarray(range(2*ncol))+0.1)/2))
     diccol=dict(zip(baseL,num_base))
-    apc['basenum'] = list(map(lambda x: diccol[x],apc.baseline))
+    coh['basenum'] = list(map(lambda x: diccol[x],apc.baseline))
 
-    for basenum in sorted(apc.basenum.unique()):
-        data=apc[apc.basenum==basenum]
+    for basenum in sorted(coh.basenum.unique()):
+        data=coh[coh.basenum==basenum].copy()
         max_plot = np.maximum(np.max(data.var_before),np.max(data.var_after))
         min_plot = np.minimum(np.min(data.var_before),np.min(data.var_after))
         sg=sns.lmplot(data=data,x='amp_coh',y='amp_incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,

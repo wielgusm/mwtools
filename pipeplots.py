@@ -697,8 +697,8 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     data = data_rr.copy()
     data['lcamp_rr'] = data_rr['camp']
     data['lcamp_ll'] = data_ll['camp']
-    data['sigma_rr'] = data_lo['sigmaCA']
-    data['sigma_ll'] = data_hi['sigmaCA']
+    data['sigma_rr'] = data_rr['sigmaCA']
+    data['sigma_ll'] = data_ll['sigmaCA']
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['lcamp_diff'] = data['lcamp_rr'] - data['lcamp_ll']
     data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])

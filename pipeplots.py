@@ -295,12 +295,13 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.show()
 
     sourceL = sorted(list(data.source.unique()))
-    nplots=len(sourceL)
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
     ncols=2
     nrows=int(np.ceil(nplots/ncols))
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
 
-    whatL = sorted(list(data[by_what].unique()))
+    
     #for cou,sour in enumerate(sourceL):
     for cou,what in enumerate(whatL):
         nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))

@@ -141,9 +141,15 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     plt.show()
 
 
-def compare_uvf_apc(apc_sc,uvf_sc,by_scan_id=False):
-
-    uvf,apc=ut.match_frames(uvf_sc.copy(),apc_sc.copy(),['source','band','polarization','scan_id','baseline'])
+def compare_uvf_apc(apc_sc,uvf_sc,by_scan_id=False, polarizations=['LL','RR'],bands=['lo','hi']):
+    
+    uvf_sc = uvf_sc[list(map(lambda x: x in polarizations, uvf_sc.polarization))]
+    foo_uvf = uvf_sc[list(map(lambda x: x in bands, uvf_sc.band))].copy()
+    
+    apc_sc = apc_sc[list(map(lambda x: x in polarizations, apc_sc.polarization))]
+    foo_apc = apc_sc[list(map(lambda x: x in bands, apc_sc.band))].copy()
+    
+    uvf,apc=ut.match_frames(foo_uvf.copy(),foo_apc.copy(),['source','band','polarization','scan_id','baseline'])
     apc['var_before'] = uvf['std_by_mean']
     apc['var_after'] = apc['std_by_mean']
     apc['after2before'] = apc['var_after']/apc['var_before']

@@ -184,8 +184,8 @@ def compare_coherence_time(coh0,incoh0):
 
     for basenum in sorted(coh.basenum.unique()):
         data=coh[coh.basenum==basenum].copy()
-        max_plot = np.maximum(np.max(data.var_before),np.max(data.var_after))
-        min_plot = np.minimum(np.min(data.var_before),np.min(data.var_after))
+        max_plot = np.maximum(np.max(data.amp_coh),np.max(data.amp_incoh))
+        min_plot = np.minimum(np.min(data.amp_coh),np.min(data.amp_incoh))
         sg=sns.lmplot(data=data,x='amp_coh',y='amp_incoh',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
                      palette=dict_col_sour)
         ax1 = sg.fig.axes[0]

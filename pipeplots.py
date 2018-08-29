@@ -129,7 +129,7 @@ def plot_amp_days(data,sour, bars_on=False, only_parallel=True,logscale=True,pal
     plt.show()
 
 
-def compare_uvf_apc(apc_sc,uvf_sc):
+def compare_uvf_apc(apc_sc,uvf_sc,by_scan_id=False):
 
     uvf,apc=ut.match_frames(uvf_sc.copy(),apc_sc.copy(),['source','band','polarization','scan_id','baseline'])
     apc['var_before'] = uvf['std_by_mean']
@@ -147,7 +147,11 @@ def compare_uvf_apc(apc_sc,uvf_sc):
         data=apc[apc.basenum==basenum]
         max_plot = np.maximum(np.max(data.var_before),np.max(data.var_after))
         min_plot = np.minimum(np.min(data.var_before),np.min(data.var_after))
-        sg=sns.lmplot(data=data,x='var_before',y='var_after',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
+        if by_scan_id==False:
+            sg=sns.lmplot(data=data,x='var_before',y='var_after',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
+                     palette=dict_col_sour, scatter_kws={'alpha':0.3})
+        else:
+            sg=sns.lmplot(data=data,x='scan_id',y='after2before',hue='source',col='baseline',fit_reg=False,sharey=False,sharex=False,
                      palette=dict_col_sour, scatter_kws={'alpha':0.3})
         ax1 = sg.fig.axes[0]
         hm1y=ax1.get_ylim()

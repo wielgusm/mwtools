@@ -54,6 +54,13 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     print("median snr {}".format(np.median(foo.snr)))
     print("=========================================")
 
+    bins = np.logspace(0,1.2*np.max(foo.snr),nscan)
+    plt.hist(foo.snr,bins=bins,histtype='step',linewidth=2,density=False)
+    plt.xscale('log')
+    plt.xlabel('snr')
+    plt.ylabel('detections')
+    plt.show()
+
     
     foo['baseline']=list(map(lambda x: Z2SMT[x[0]]+'-'+Z2SMT[x[1]],foo.baseline))
     exptL=list(foo.expt_no.unique())

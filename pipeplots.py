@@ -294,8 +294,8 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))
-    rangey = plt.get_ylim()
-    rangex = plt.get_xlim()
+    rangey = plt.ylim()
+    rangex = plt.xlim()
     plt.text(0.6*rangex[1], 0.9*rangey[1], "MAD: %3.2f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     plt.text(0.6*rangex[1], 0.8*rangey[1], "REL MAD: %3.2f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 

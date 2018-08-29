@@ -803,4 +803,55 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     return data
 
 
+def trivial_cphase(data0,xmax=10,by_what='source'):
 
+    data = cl.only_trivial_triangles(data0, whichB=whichB)
+    data=data.copy()
+    data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(TCP)/(thermal error)')
+    plt.title('All data')
+    mad_abs=np.median(np.abs(data['cphase']))
+    mad_rel=np.median(np.abs(data['rel_diff']))
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(TCP)/(thermal error)')
+        ax[nrowL,ncolL].set_title(what)
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+    return data

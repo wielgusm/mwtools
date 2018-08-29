@@ -384,7 +384,8 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     nrows=int(np.ceil(nplots/ncols))
     fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
 
-    for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+    #for cou,sour in enumerate(sourceL):
         nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
         bins = np.linspace(-xmax,xmax,nbins)
         nrowL = int(np.floor(cou/2))

@@ -694,7 +694,7 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
 def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
-    data = data_lo.copy()
+    data = data_rr.copy()
     data['lcamp_rr'] = data_rr['camp']
     data['lcamp_ll'] = data_ll['camp']
     data['sigma_rr'] = data_lo['sigmaCA']

@@ -376,6 +376,67 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     return data
 
 
+def polar_cphase_consistency(data0,xmax=10,by_what='source'):
+
+    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','triangle','band'])
+    data = data_rr.copy()
+    data['cphase_rr'] = data_rr['cphase']
+    data['cphase_ll'] = data_ll['cphase']
+    data['sigma_rr'] = data_rr['sigmaCP']
+    data['sigma_ll'] = data_ll['sigmaCP']
+    data['sigma'] = np.sqrt(data['sigma_ll']**2 + data['sigma_rr']**2)
+    data['cphase_diff'] = np.angle(np.exp(1j*(data['cphase_rr'] - data['cphase_ll'])*np.pi/180))*180./np.pi
+    data['rel_diff'] = np.asarray(data['cphase_diff'])/np.asarray(data['sigma'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(RR-LL)/(thermal error)')
+    plt.title('All data')
+    mad_abs=np.median(np.abs(data['cphase_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
+        ax[nrowL,ncolL].set_title(what)
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+    return data
+
+
+
 def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])

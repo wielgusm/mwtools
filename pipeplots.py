@@ -167,7 +167,7 @@ def compare_uvf_apc(apc_sc,uvf_sc):
             lh._sizes = [50] 
         plt.show()
 
-    return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
+    return apc[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
 
 
 def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0):
@@ -211,7 +211,7 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0):
             lh._sizes = [50] 
         plt.show()
 
-    return data[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()
+    return coh[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','sigma_coh','sigma_incoh']].copy()
 
 
 def bandpass_amplitude_consistency(data0,xmax=10):

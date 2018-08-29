@@ -249,12 +249,14 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(LO-HI)/(thermal error)')
     plt.title('All data')
 
+    med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -276,12 +278,14 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
+        med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
     return data
@@ -368,12 +372,14 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     plt.xlabel('2*(LO-HI)/(L0 + HI)')
     plt.title('All data')
 
+    med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -397,12 +403,14 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
         #ax[nrowL,ncolL].set_xlim([-xmax,xmax])
         ax[nrowL,ncolL].set_title(what)
 
+        med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
     return data
@@ -430,12 +438,14 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(RR-LL)/(thermal error)')
     plt.title('All data')
 
+    med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -459,12 +469,14 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
 
+        med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
         
     plt.show()
@@ -492,12 +504,14 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     plt.xlabel('2*(RR-LL)/(RR+LL)')
     plt.title('All data')
 
+    med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -520,12 +534,14 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('2*(RR-LL)/(RR+LL)')
         ax[nrowL,ncolL].set_title(what)
 
+        med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
     return data

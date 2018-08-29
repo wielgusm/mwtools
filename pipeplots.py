@@ -312,7 +312,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
-        ax[nrowL,ncolL].set_title(sour)
+        ax[nrowL,ncolL].set_title(what)
     plt.show()
     return data
 

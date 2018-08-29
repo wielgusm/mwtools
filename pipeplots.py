@@ -271,6 +271,50 @@ def bandpass_amplitude_consistency(data0,xmax=10):
     return data
 
 
+def bandpass_cphase_consistency(data0,xmax=10):
+
+    data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
+    data = data_lo.copy()
+    data['cphase_lo'] = data_lo['cphase']
+    data['cphase_hi'] = data_hi['cphase']
+    data['sigma_lo'] = data_lo['sigmaCP']
+    data['sigma_hi'] = data_hi['sigmaCP']
+    data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
+    data['sigma_diff'] = np.angle(np.exp(1j*(data['cphase_lo'] - data['cphase_hi'])*np.pi/180))*180./np.pi
+    data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['sigma'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(LO-HI)/(thermal error)')
+    plt.title('All data')
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    nplots=len(sourceL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    for cou,sour in enumerate(sourceL):
+        nbins = int(np.sqrt(np.shape(data[data.source==sour])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data.source==sour]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
+        ax[nrowL,ncolL].set_title(sour)
+    plt.show()
+    return data
+
+
 def bandpass_amplitude_rel_consistency(data0,xmax=2.):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])

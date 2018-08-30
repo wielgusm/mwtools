@@ -1,6 +1,7 @@
 import pandas as pd
 from eat.io import uvfits
 from eat.inspect import utils as ut
+from eat.inspect import closures as cl
 import os
 
 path0 = '/data/2017-april/ce/er4/aips/e17e11-4-lo-ver1-ASIAA-31DEC18/'

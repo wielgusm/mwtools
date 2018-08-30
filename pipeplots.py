@@ -862,7 +862,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
 
 
 def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
-    p1, p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','quadrangle','band','polarization'])
+    p1, p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','baseline','band','polarization'])
     data = p1.copy()
     data['amp_p1'] = p1['amp']
     data['amp_p2'] = p2['amp']

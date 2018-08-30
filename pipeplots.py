@@ -889,7 +889,8 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     x=np.linspace(-xmax,xmax,128)
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
-    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    if norm_therma==True:
+        plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
     plt.axvline(0,color='k')
     plt.xlabel(lab)
     plt.title('All data')
@@ -919,7 +920,8 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         nrowL = int(np.floor(cou/2))
         ncolL = cou%ncols
         ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
-        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        if norm_therma==True:
+            ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
         ax[nrowL,ncolL].grid()
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel(lab)

@@ -4,7 +4,7 @@ from eat.inspect import utils as ut
 import os
 
 def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_hdf=True):
+    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_hdf=True,rescale_noise=False):
 
     #path_vex= '/home/maciek/VEX/'
     #path_out = '/home/maciek/import_data/er4/'
@@ -21,7 +21,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                 if filen.endswith(filend): 
                     print('processing ', filen)
                     try:
-                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel)
+                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel,rescale_noise=rescale_noise)
                         if 'std_by_mean' in df_foo.columns:
                             df_foo.drop('std_by_mean',axis=1,inplace=True)
                         df_foo['std_by_mean'] = df_foo['amp']

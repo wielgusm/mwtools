@@ -15,10 +15,10 @@ out_name='AIPS_ASIAA_ER4_3601_LO'
 for filen in os.listdir(path0):
     if filen.endswith(filend): 
         print('processing ', filen)
-        try:
-            df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band='lo',round_s=0.1,only_parallel=only_parallel)
-            df_scan = ut.coh_avg_vis(df_foo.copy(),tavg='scan',phase_type='phase')
-            df = pd.concat([df,df_scan.copy()],ignore_index=True)
-        except: pass
+        #try:
+        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band='lo',round_s=0.1,only_parallel=only_parallel)
+        df_scan = ut.coh_avg_vis(df_foo.copy(),tavg='scan',phase_type='phase')
+        df = pd.concat([df,df_scan.copy()],ignore_index=True)
+        #except: pass
 
 df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')

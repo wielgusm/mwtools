@@ -68,6 +68,7 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo',
     for band in bandL:  
             path_data = path_data_0+'hops-'+band+'/'+data_subfolder+'data/'+filen
             df_foo = hops.read_alist(path_data)
+            df_foo['band'] = band
             df = pd.concat([df,df_foo],ignore_index=True)
             
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)

@@ -76,7 +76,7 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo',
     df['scan_id']=list(map(lambda x: dict_scan_id[x],df['scan_id']))
 
     #df.to_pickle(path_out+out_name+'.pic')
-    df.to_hdf(out_name+'.h5', key=out_name, mode='w',format='table')
+    df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
 
 
 

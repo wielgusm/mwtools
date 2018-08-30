@@ -66,7 +66,7 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo',
     df = pd.DataFrame({})
 
     for band in bandL:  
-            path0 = path_data_0+'hops-'+band+'/'+data_subfolder+'data/'+filen
+            path_data = path_data_0+'hops-'+band+'/'+data_subfolder+'data/'+filen
             df_foo = hops.read_alist(path_data)
             df = pd.concat([df,df_foo],ignore_index=True) 
     

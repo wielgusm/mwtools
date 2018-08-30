@@ -899,9 +899,11 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+    #plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    #plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    #plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -928,9 +930,11 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+        #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        #ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
     return data
@@ -955,12 +959,16 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
     plt.axvline(0,color='k')
     plt.xlabel('(cp_P1-cp_P2)/(thermal error)')
     plt.title('All data')
+    med=np.median((data['cphase_diff']))
     mad_abs=np.median(np.abs(data['cphase_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+
+    #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
 
@@ -984,12 +992,14 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('(cp_P1-cp_P2)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
+        med=np.median((data[data[by_what]==what]['cphase_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+
     plt.show()
     return data
 
@@ -1014,12 +1024,16 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
     plt.axvline(0,color='k')
     plt.xlabel('(lca_P1 - lca_P2)/(thermal error)')
     plt.title('All data')
+    med=np.median((data['lcamp_diff']))
     mad_abs=np.median(np.abs(data['lcamp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+
+    #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
     plt.show()
 
     sourceL = sorted(list(data.source.unique()))
@@ -1041,12 +1055,16 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
         ax[nrowL,ncolL].axvline(0,color='k')
         ax[nrowL,ncolL].set_xlabel('(lca_P1 - lca_P2)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
+        med=np.median((data[data[by_what]==what]['lcamp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['lcamp_diff']))
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
-        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.98*xmax, 0.5*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(med,mad_abs,mad_rel), size=14,
+         va="baseline", ha="right", multialignment="left",bbox=dict(facecolor='white'))
+
+        #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
     plt.show()
     return data
 

@@ -30,6 +30,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                         else:
                             df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                         df = pd.concat([df,df_scan.copy()],ignore_index=True)
+                        df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
                     except: pass
                 else: pass 
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)        

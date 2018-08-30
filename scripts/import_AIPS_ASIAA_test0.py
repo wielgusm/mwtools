@@ -27,7 +27,7 @@ for filen in os.listdir(path0):
             df_scan = ut.coh_avg_vis(df_foo.copy(),tavg='scan',phase_type='phase')
             df = pd.concat([df,df_scan.copy()],ignore_index=True)
         except: pass
-
+df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
 df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
 
 #####################
@@ -44,7 +44,7 @@ for filen in os.listdir(path0):
             df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=10.,phase_type='phase')
             df = pd.concat([df,df_scan.copy()],ignore_index=True)
         except: pass
-
+df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
 df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
 
 #####################

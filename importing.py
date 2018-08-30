@@ -59,8 +59,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                         df = pd.concat([df,df_foo],ignore_index=True)  
     df.to_pickle(path_out+out_name+'.pic')
 
-def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,
-    bandL=['lo','hi']):
+def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo','hi']):
     from eat.io import hops
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -76,7 +75,8 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,
     df['sigma'] = df['amp']/df['snr']
     df['scan_id']=list(map(lambda x: dict_scan_id[x],df['scan_id']))
 
-    df.to_pickle(path_out+out_name+'.pic')
+    #df.to_pickle(path_out+out_name+'.pic')
+    df.to_hdf(out_name+'.hdf', key=out_name, mode='w',format='table')
 
 
 

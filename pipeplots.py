@@ -277,7 +277,7 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
 
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -306,7 +306,7 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_title(what)
         med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -339,7 +339,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(LO-HI)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -368,7 +368,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -399,7 +399,7 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(RR-LL)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -428,7 +428,7 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -461,7 +461,7 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -492,7 +492,7 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
         med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -527,7 +527,7 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
 
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -558,7 +558,7 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
 
         med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -593,7 +593,7 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -623,7 +623,7 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
 
         med=np.median((data[data[by_what]==what]['amp_diff']))
         mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
@@ -655,7 +655,7 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(LO-HI)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['lcamp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -683,7 +683,7 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(LO-HI)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['lcamp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -713,7 +713,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     plt.xlabel('(RR-LL)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['lcamp_diff']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -741,7 +741,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(RR-LL)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['lcamp_diff']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -766,7 +766,7 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     plt.xlabel('(TCA)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['camp']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -794,7 +794,7 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(TCA)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['camp']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -819,7 +819,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
     plt.xlabel('(TCP)/(thermal error)')
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase']))
-    mad_rel=np.median(np.abs(data['rel_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -848,10 +848,199 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
         ax[nrowL,ncolL].set_xlabel('(TCP)/(thermal error)')
         ax[nrowL,ncolL].set_title(what)
         mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase']))
-        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+    return data
+
+############################
+# PIPELINE TESTS
+############################
+
+
+def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
+    p1, p2 = ut.match_frames(pipe1.copy(),pipe2..copy(),['scan_id','quadrangle','band','polarization'])
+    data = p1.copy()
+    data['amp_p1'] = p1['amp']
+    data['amp_p2'] = p2['amp']
+    data['sigma_p1'] = p1['sigma']
+    data['sigma_p2'] = p2['sigma']
+    data['sigma'] = np.sqrt(data['sigma_p1']**2 + data['sigma_p2']**2)
+    data['amp_diff'] = np.asarray(data['amp_p1']) - np.asarray(data['amp_p2'])
+    data['amp_mean'] = 0.5*(data['amp_p1']+data['amp_p2'])
+
+    if norm_thermal==True:
+        data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['sigma'])
+        lab='(P1-P2)/(thermal error)'
+    else:
+        data['rel_diff'] = data['amp_diff']/data['amp_mean']
+        lab='0.5*(P1-P2)/(P1+P2)'
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel(lab)
+    plt.title('All data')
+
+    med=np.median((data['amp_diff']))
+    mad_abs=np.median(np.abs(data['amp_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel(lab)
+        ax[nrowL,ncolL].set_title(what)
+        med=np.median((data[data[by_what]==what]['amp_diff']))
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['amp_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+    return data
+
+def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
+    data_p1, data_p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','triangle','band','polarization'])
+    data = data_p1.copy()
+    data['cphase_p1'] = data_p1['cphase']
+    data['cphase_p2'] = data_p2['cphase']
+    data['sigma_p1'] = data_p1['sigmaCP']
+    data['sigma_p2'] = data_p2['sigmaCP']
+    data['sigma'] = np.sqrt(data['sigma_p1']**2 + data['sigma_p2']**2)
+    data['cphase_diff'] = np.angle(np.exp(1j*(data['cphase_p1'] - data['cphase_p2'])*np.pi/180))*180./np.pi
+    data['rel_diff'] = np.asarray(data['cphase_diff'])/np.asarray(data['sigma'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(cp_P1-cp_P2)/(thermal error)')
+    plt.title('All data')
+    mad_abs=np.median(np.abs(data['cphase_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+
+    
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(cp_P1-cp_P2)/(thermal error)')
+        ax[nrowL,ncolL].set_title(what)
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['cphase_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+    return data
+
+def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
+
+    data_p1, data_p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','quadrangle','polarization','band'])
+    data = data_p1.copy()
+    data['lcamp_p1'] = data_p1['camp']
+    data['lcamp_p2'] = data_p2['camp']
+    data['sigma_p1'] = data_p1['sigmaCA']
+    data['sigma_p2'] = data_p2['sigmaCA']
+    data['sigma'] = np.sqrt(data['sigma_p1']**2 + data['sigma_p2']**2)
+    data['lcamp_diff'] = data['lcamp_p1'] - data['lcamp_p2']
+    data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
+
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    plt.grid()
+    plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+    plt.axvline(0,color='k')
+    plt.xlabel('(lca_P1 - lca_P2)/(thermal error)')
+    plt.title('All data')
+    mad_abs=np.median(np.abs(data['lcamp_diff']))
+    mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    rangey = plt.ylim()
+    rangex = plt.xlim()
+    plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
+    plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
+    plt.show()
+
+    sourceL = sorted(list(data.source.unique()))
+    whatL = sorted(list(data[by_what].unique()))
+    nplots=len(whatL)
+    ncols=2
+    nrows=int(np.ceil(nplots/ncols))
+    fig, ax = plt.subplots(nrows,ncols,sharey='all',sharex='all',figsize=(ncols*7,nrows*5))
+    
+    #for cou,sour in enumerate(sourceL):
+    for cou,what in enumerate(whatL):
+        nbins = int(np.sqrt(np.shape(data[data[by_what]==what])[0]))
+        bins = np.linspace(-xmax,xmax,nbins)
+        nrowL = int(np.floor(cou/2))
+        ncolL = cou%ncols
+        ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+        ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
+        ax[nrowL,ncolL].grid()
+        ax[nrowL,ncolL].axvline(0,color='k')
+        ax[nrowL,ncolL].set_xlabel('(lca_P1 - lca_P2)/(thermal error)')
+        ax[nrowL,ncolL].set_title(what)
+        mad_abs=np.median(np.abs(data[data[by_what]==what]['lcamp_diff']))
+        mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
+        rangey = ax[nrowL,ncolL].get_ylim()
+        rangex = ax[nrowL,ncolL].get_xlim()
+        ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
         ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
     plt.show()
     return data

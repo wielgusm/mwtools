@@ -4,7 +4,7 @@ from eat.inspect import utils as ut
 import os
 
 def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False):
+    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_hdf=True):
 
     #path_vex= '/home/maciek/VEX/'
     #path_out = '/home/maciek/import_data/er4/'
@@ -33,10 +33,14 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                     except: pass
                 else:
                     pass         
-    df.to_pickle(path_out+out_name+'.pic')
+    if out_hdf==True:
+        df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
+    else:
+        df.to_pickle(path_out+out_name+'.pic')
+    
 
 def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],filend=".uvfits",incoh_avg=False):
+    bandL=['lo','hi'],filend=".uvfits",incoh_avg=False,out_hdf=True):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -57,7 +61,11 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                     else:
                         print('no averaging')
                         df = pd.concat([df,df_foo],ignore_index=True)  
-    df.to_pickle(path_out+out_name+'.pic')
+    if out_hdf==True:
+        df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
+    else:
+        df.to_pickle(path_out+out_name+'.pic')
+
 
 def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo','hi']):
     from eat.io import hops

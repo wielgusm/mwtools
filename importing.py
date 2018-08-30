@@ -31,8 +31,8 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                             df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                         df = pd.concat([df,df_scan.copy()],ignore_index=True)
                     except: pass
-                else:
-                    pass         
+                else: pass 
+    df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)        
     if out_hdf==True:
         df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
     else:
@@ -61,6 +61,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                     else:
                         print('no averaging')
                         df = pd.concat([df,df_foo],ignore_index=True)  
+    df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     if out_hdf==True:
         df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
     else:

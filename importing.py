@@ -73,7 +73,7 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo',
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df.drop(list(df[df.baseline.str[0]==df.baseline.str[1]].index.values),inplace=True) 
     df['phase'] = df['resid_phas']
-    df['amp'] = (1.e4)*df['amp']
+    df['amp'] = (1.e-4)*df['amp']
     df['sigma'] = df['amp']/df['snr']
     df['scan_id']=list(map(lambda x: dict_scan_id[x],df['scan_id']))
 

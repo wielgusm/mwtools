@@ -866,6 +866,7 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         pipe1['sigma'] = pipe1['amp']/pipe1['snr']
     if 'sigma' not in pipe2.columns:
         pipe2['sigma'] = pipe2['amp']/pipe2['snr']
+
     p1, p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','baseline','band','polarization'])
     data = p1.copy()
     data['amp_p1'] = p1['amp']

@@ -930,7 +930,7 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
         ax[nrowL,ncolL].text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
-         va="top", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+         va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))

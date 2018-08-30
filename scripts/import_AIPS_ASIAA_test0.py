@@ -8,7 +8,7 @@ path_vex= '/home/maciek/VEX/'
 path_out = '/home/maciek/validation/AIPS_ASIAA_ER4/'
 if not os.path.exists(path_out):
     os.makedirs(path_out)
-filend='.fitp'
+filend='.fittp'
 only_parallel=True
 df=pd.DataFrame({})
 out_name='AIPS_ASIAA_ER4_3601_LO'

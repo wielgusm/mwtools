@@ -906,8 +906,8 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     #plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
-    print("Median absolute error in % of amplitude: {}".format(np.median(np.abs(data['amp_diff']/data['amp_mean']))))
-    print("90th percentile of absolute error in % of amplitude: {}".format(np.percentile(np.abs(data['amp_diff']/data['amp_mean']),90)))
+    print("Median absolute error in % of amplitude: {}".format(100.*np.median(np.abs(data['amp_diff']/data['amp_mean']))))
+    print("90th percentile of absolute error in % of amplitude: {}".format(100.*np.percentile(np.abs(data['amp_diff']/data['amp_mean']),90)))
 
     sourceL = sorted(list(data.source.unique()))
     whatL = sorted(list(data[by_what].unique()))

@@ -906,6 +906,8 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     #plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
+    print("Median absolute error in % of amplitude: {}".format(np.median(np.abs(data['amp_diff']/data['amp_mean']))))
+    print("90th percentile of absolute error in % of amplitude: {}".format(np.percentile(np.abs(data['amp_diff']/data['amp_mean']),90)))
 
     sourceL = sorted(list(data.source.unique()))
     whatL = sorted(list(data[by_what].unique()))
@@ -931,7 +933,7 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        ax[nrowL,ncolL].text(rangex[1], 0., "MED: {} \nMAD: {} deg\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MED: %4.3f" % med , bbox=dict(facecolor='white', alpha=1.))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -965,12 +967,14 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+    plt.text(rangex[1], 0., "MED: {} \nMAD: {} deg\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
+    print("Median absolute error in deg: {}".format(np.median(np.abs(data['cphase_diff']))))
+    print("90th percentile of absolute error in deg: {}".format(np.percentile(np.abs(data['cphase_diff']),90)))
 
     sourceL = sorted(list(data.source.unique()))
     whatL = sorted(list(data[by_what].unique()))

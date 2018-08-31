@@ -346,7 +346,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+    plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
@@ -377,7 +377,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
@@ -410,7 +410,7 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+    plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
 
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -442,7 +442,7 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
 
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
@@ -865,7 +865,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+    plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
@@ -896,7 +896,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
         mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
         rangey = ax[nrowL,ncolL].get_ylim()
         rangex = ax[nrowL,ncolL].get_xlim()
-        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
          va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
 
         #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))

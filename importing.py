@@ -41,7 +41,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
     
 
 def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],filend=".uvfits",incoh_avg=False,out_hdf=True):
+    bandL=['lo','hi'],filend="netcal.uvfits",incoh_avg=False,out_hdf=True):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 

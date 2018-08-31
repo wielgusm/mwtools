@@ -24,7 +24,8 @@ dict_col_sour = {'1055+018': 'tan',
      'M87': 'k',
      'NGC1052': 'dodgerblue',
      'OJ287': 'gold',
-     'SGRA': 'red'}
+     'SGRA': 'red',
+     'CYGX-3': 'silver'}
 
 SMT2Z = {'ALMA': 'A', 'APEX': 'X', 'JCMT': 'J', 'LMT':'L', 'SMR':'R', 'SMA':'S', 'SMT':'Z', 'PV':'P','SPT':'Y'}
 Z2SMT = {v: k for k, v in SMT2Z.items()}

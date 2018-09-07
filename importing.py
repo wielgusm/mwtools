@@ -33,7 +33,8 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg
                         df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
                     except: pass
                 else: pass 
-    df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)        
+    df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
+    df['source'] = list(map(str,df['source']))        
     if out_hdf==True:
         df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
     else:

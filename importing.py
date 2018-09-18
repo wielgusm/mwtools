@@ -42,6 +42,43 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipe
     else: return df
     
 
+def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='hops',tavg='scan',
+    band='none',only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False):
+
+    if not os.path.exists(path_out):
+        os.makedirs(path_out) 
+    df = pd.DataFrame({})
+    path0 = path_folder
+    for filen in os.listdir(path0):
+        if filen.endswith(filend): 
+            print('processing ', filen)
+            try:
+                df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel,rescale_noise=rescale_noise)
+                if 'std_by_mean' in df_foo.columns:
+                    df_foo.drop('std_by_mean',axis=1,inplace=True)
+                df_foo['std_by_mean'] = df_foo['amp']
+                if incoh_avg==False:
+                    df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                else:
+                    df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
+                df = pd.concat([df,df_scan.copy()],ignore_index=True)
+                df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
+            except: pass
+        else: pass 
+    df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
+    df['source'] = list(map(str,df['source']))
+    if len(bandL)==1:
+        out_name=out_name+'_'+bandL[0]        
+    if out_type=='hdf':
+        df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
+    elif out_type=='pic':
+        df.to_pickle(path_out+out_name+'.pic')
+    elif out_type=='both':
+        df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
+        df.to_pickle(path_out+out_name+'.pic')
+    else: return df
+
+
 def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
     bandL=['lo','hi'],filend="netcal.uvfits",incoh_avg=False,out_type='hdf'):
 

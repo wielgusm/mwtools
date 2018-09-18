@@ -67,8 +67,8 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
         else: pass 
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df['source'] = list(map(str,df['source']))
-    if len(bandL)==1:
-        out_name=out_name+'_'+bandL[0]        
+    if band!='none':
+        out_name=out_name+'_'+band        
     if out_type=='hdf':
         df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
     elif out_type=='pic':

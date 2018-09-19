@@ -238,12 +238,14 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, po
         ax1.plot(hm1x,[1,1],'k--')
         #ax1.set_ylim(hm1y)
         #ax1.set_xlim(hm1x)
-        ax2 = sg.fig.axes[1]
-        hm2x=ax2.get_xlim()
-        hm2y=ax2.get_ylim()
-        ax2.plot(hm2x,[1,1],'k--')
-        #ax2.set_ylim(hm2y)
-        #ax2.set_xlim(hm2x)
+        try:
+            ax2 = sg.fig.axes[1]
+            hm2x=ax2.get_xlim()
+            hm2y=ax2.get_ylim()
+            ax2.plot(hm2x,[1,1],'k--')
+            #ax2.set_ylim(hm2y)
+            #ax2.set_xlim(hm2x)
+        except IndexError: continue
         for lh in sg._legend.legendHandles: 
             lh.set_alpha(1)
             lh._sizes = [50] 

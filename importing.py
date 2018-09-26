@@ -64,9 +64,7 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
                     df_scan = ut.incoh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')
                 df = pd.concat([df,df_scan.copy()],ignore_index=True)
                 df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
-                print(df.columns) 
-                print(np.shape(df))
-            except: pass
+            except ValueError: pass
         else: pass
     print(df.columns) 
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)

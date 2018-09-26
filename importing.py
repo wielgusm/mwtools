@@ -4,7 +4,7 @@ from eat.inspect import utils as ut
 import os
 
 def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipeline_name='hops',tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False):
+    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False,polrep=None):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -16,7 +16,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipe
                 if filen.endswith(filend): 
                     print('processing ', filen)
                     try:
-                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel,rescale_noise=rescale_noise)
+                        df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel,rescale_noise=rescale_noise,polrep=polrep)
                         if 'std_by_mean' in df_foo.columns:
                             df_foo.drop('std_by_mean',axis=1,inplace=True)
                         df_foo['std_by_mean'] = df_foo['amp']
@@ -43,7 +43,7 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipe
     
 
 def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='hops',tavg='scan',
-    band='none',only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False):
+    band='none',only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False,polrep=None):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -53,7 +53,8 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
         if filen.endswith(filend): 
             print('processing ', filen)
             try:
-                df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,only_parallel=only_parallel,rescale_noise=rescale_noise)
+                df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,
+                only_parallel=only_parallel,rescale_noise=rescale_noise,polrep=polrep)
                 if 'std_by_mean' in df_foo.columns:
                     df_foo.drop('std_by_mean',axis=1,inplace=True)
                 df_foo['std_by_mean'] = df_foo['amp']
@@ -80,7 +81,7 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
 
 
 def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_name,tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],filend="netcal.uvfits",incoh_avg=False,out_type='hdf'):
+    bandL=['lo','hi'],filend="netcal.uvfits",incoh_avg=False,out_type='hdf',polrep=None):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -91,7 +92,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
             path0 = path_data_0+'hops-'+band+'/'+data_subfolder+str(expt)+'/'
             for filen in os.listdir(path0):
                 if filen.endswith(filend): 
-                    df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='no',band=band,round_s=0.1,only_parallel=True)
+                    df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='no',band=band,round_s=0.1,only_parallel=True,polrep=polrep)
                     if tavg!=-1:
                         if incoh_avg==False:
                             df_scan = ut.coh_avg_vis(df_foo.copy(),tavg=tavg,phase_type='phase')

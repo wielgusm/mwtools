@@ -57,8 +57,13 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     print("=========================================")
 
     bins = np.logspace(0.5*np.log10(np.min(foo.snr)),1.1*np.log10(np.max(foo.snr)),np.sqrt(nscan))
-    plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='non-ALMA baselines')
-    plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='ALMA baselines')
+    try:
+        plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='non-ALMA baselines')
+        plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='ALMA baselines')
+    except AttributeError:
+        plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,normed=False,label='non-ALMA baselines')
+        plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,normed=False,label='ALMA baselines')
+
     plt.xscale('log')
     plt.xlabel('snr')
     plt.ylabel('detections')
@@ -140,6 +145,72 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
                 ax[couC].set_ylim(ymax=1.1*np.max(foo.amp))
                 couP+=1
         plt.tight_layout()
+    plt.show()
+
+
+def plot_amp_single_day(data,sour,expt=3601, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict):
+
+    data = data[list(map(lambda x: x in polarizations, data.polarization))]
+    data = data[list(map(lambda x: x in bands, data.band))]
+    foo = data[data.source==sour].copy()
+
+    nscan=np.shape(foo)[0]
+    nbase = len(foo.baseline.unique())
+    print(sour)
+    print("{} detections on {} baselines".format(nscan,nbase))
+    print("median snr {}".format(np.median(foo.snr)))
+    print("=========================================")
+
+    bins = np.logspace(0.5*np.log10(np.min(foo.snr)),1.1*np.log10(np.max(foo.snr)),np.sqrt(nscan))
+    try:
+        plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='non-ALMA baselines')
+        plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,density=False,label='ALMA baselines')
+    except AttributeError:
+        plt.hist(foo[~foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,normed=False,label='non-ALMA baselines')
+        plt.hist(foo[foo.baseline.str.contains('A')].snr,bins=bins,histtype='step',linewidth=2,normed=False,label='ALMA baselines')
+
+    plt.xscale('log')
+    plt.xlabel('snr')
+    plt.ylabel('detections')
+    plt.grid()
+    plt.title(sour)
+    plt.legend()
+    plt.show()
+
+    
+    foo['baseline']=list(map(lambda x: Z2SMT[x[0]]+'-'+Z2SMT[x[1]],foo.baseline))
+    exptL=list(foo.expt_no.unique())
+    nplots=(len(exptL)+1)
+    ncols=2
+    #nrows=np.maximum(2,int(np.ceil(nplots/ncols)))
+    nrows=int(np.ceil(nplots/ncols))
+
+    if 'uvdist' not in foo.columns:
+        foo['uvdist'] = np.sqrt(foo['u']**2 + foo['v']**2)
+    exptD = dict(zip(range(nplots),['all']+exptL))
+
+
+    fig, ax = plt.subplots(1,1,sharey='all',sharex='all',figsize=(1*7,1*5))
+
+    #couC=0
+    foo1=foo[foo.expt_no==expt]
+    for base in list(foo1.baseline.unique()):
+
+        foo2=foo1[foo1.baseline==base]
+        if ('ALMA' in base) or (('SMA' in base)&('JCMT' not in base)):
+            ax.errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='o',mfc='none',ms=8,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+        else:
+            ax.errorbar(foo2.uvdist,foo2.amp,bars_on*foo2.sigma,fmt='x',ms=5,color=palette_dict[base],label=SMT2Zb[base.split('-')[0]]+SMT2Zb[base.split('-')[1]])
+    ax.legend(bbox_to_anchor=(-0.15, 1.52))
+    ax.grid()
+    ax.set_title(sour+' | '+str((expt)))
+    ax.set_xlabel('UV distance')
+    ax.set_ylabel('amplitudes')
+    if logscale==True:
+        ax.set_yscale("log", nonposy='clip')
+    ax.set_ylim(ymin=0.1*np.min(foo.amp))
+    ax.set_ylim(ymax=1.1*np.max(foo.amp))
+    plt.tight_layout()
     plt.show()
 
 

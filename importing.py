@@ -43,7 +43,8 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipe
     
 
 def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='hops',tavg='scan',
-    band='none',only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False,polrep=None):
+    force_singlepol='no',band='none',only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',
+    rescale_noise=False,polrep=None):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -53,7 +54,7 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
         if filen.endswith(filend): 
             print('processing ', filen)
             try:
-                df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol='',band=band,round_s=0.1,
+                df_foo = uvfits.get_df_from_uvfit(path0+filen,path_vex=path_vex,force_singlepol=force_singlepol,band=band,round_s=0.1,
                 only_parallel=only_parallel,rescale_noise=rescale_noise,polrep=polrep)
                 if 'std_by_mean' in df_foo.columns:
                     df_foo.drop('std_by_mean',axis=1,inplace=True)

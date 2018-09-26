@@ -65,7 +65,8 @@ def import_uvfits_folder(path_folder,path_vex,path_out,out_name,pipeline_name='h
                 df = pd.concat([df,df_scan.copy()],ignore_index=True)
                 df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
             except: pass
-        else: pass 
+        else: pass
+    print(df.columns) 
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df['source'] = list(map(str,df['source']))
     if band!='none':
@@ -102,7 +103,6 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                     else:
                         print('no averaging')
                         df = pd.concat([df,df_foo],ignore_index=True)  
-    print(df.columns)
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df['source'] = list(map(str,df.source))
     if out_type=='hdf':

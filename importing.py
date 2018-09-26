@@ -102,6 +102,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
                     else:
                         print('no averaging')
                         df = pd.concat([df,df_foo],ignore_index=True)  
+    print(df.columns)
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df['source'] = list(map(str,df.source))
     if out_type=='hdf':

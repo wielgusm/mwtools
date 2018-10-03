@@ -4,7 +4,7 @@ from eat.inspect import utils as ut
 import os,sys,importlib
 
 def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipeline_name='hops',tavg='scan',exptL=[3597,3598,3599,3600,3601],
-    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False,polrep=None):
+    bandL=['lo','hi'],only_parallel=True,filend=".uvfits",incoh_avg=False,out_type='hdf',rescale_noise=False,polrep=None, old_format=True):
 
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -30,6 +30,8 @@ def import_uvfits_set(path_data_0,data_subfolder,path_vex,path_out,out_name,pipe
                 else: pass 
     df.drop(list(df[df.baseline.str.contains('R')].index.values),inplace=True)
     df['source'] = list(map(str,df['source']))
+    if old_format:
+        df = ut.old_format(df)
     if len(bandL)==1:
         out_name=out_name+'_'+bandL[0]        
     if out_type=='hdf':
@@ -120,7 +122,7 @@ def import_uvfits_set_netcal(path_data_0,data_subfolder,path_vex,path_out,out_na
     else: return df
 
 
-def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo','hi']):
+def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo','hi'],out_type='both'):
     from eat.io import hops
     if not os.path.exists(path_out):
         os.makedirs(path_out) 
@@ -144,6 +146,9 @@ def import_alist(path_data_0,data_subfolder,filen,path_out,out_name,bandL=['lo',
     if out_type=='hdf':
         df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
     elif out_type=='pic':
+        df.to_pickle(path_out+out_name+'.pic')
+    elif out_type=='both':
+        df.to_hdf(path_out+out_name+'.h5', key=out_name, mode='w',format='table')
         df.to_pickle(path_out+out_name+'.pic')
     else: return df
 

@@ -296,8 +296,8 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, po
     data=coh.copy()
     sns.set_style('whitegrid')
     baseL = sorted(list(data.baseline.unique()))
-    ncol = int(np.ceil(len(baseL)/2))
-    num_base = (np.ceil((np.asarray(range(2*ncol))+0.1)/2))
+    ncol = int(np.ceil(len(baseL)/2.))
+    num_base = (np.ceil((np.asarray(range(2*ncol))+0.1)/2.))
     diccol=dict(zip(baseL,num_base))
     coh['basenum'] = list(map(lambda x: diccol[x],coh.baseline))
 

@@ -47,7 +47,7 @@ def merge_two_dicts(x, y):
 
 palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
 #palette_dict = {**palette_dict, **palette_dict_rev}
-palette_dict = merge_two_dicts(palette_dict, **palette_dict_rev)
+palette_dict = merge_two_dicts(palette_dict, palette_dict_rev)
 
 def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict):
 

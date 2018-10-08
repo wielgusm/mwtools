@@ -40,8 +40,14 @@ palette_dict = {'ALMA-APEX':'k','JCMT-SMA':'k','SMT-LMT':'lime','ALMA-LMT':'medi
     'SMT-SPT':'salmon', 'IRAM30-SPT':'saddlebrown','IRAM30-SMA':'tan','JCMT-IRAM30':'tan',
     'SMT-IRAM30':'dodgerblue'}
 
+def merge_two_dicts(x, y):
+    z = x.copy()   # start with x's keys and values
+    z.update(y)    # modifies z with y's keys and values & returns None
+    return z
+
 palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_dict.items()}
-palette_dict = {**palette_dict, **palette_dict_rev}
+#palette_dict = {**palette_dict, **palette_dict_rev}
+palette_dict = merge_two_dicts(palette_dict, **palette_dict_rev)
 
 def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict):
 

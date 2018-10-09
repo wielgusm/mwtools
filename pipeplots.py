@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -737,7 +738,7 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
     data['lcamp_diff'] = data['lcamp_lo'] - data['lcamp_hi']
     data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
-
+    data.dropna(subset=['rel_diff'],inplace=True)
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
@@ -799,10 +800,11 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['lcamp_diff'] = data['lcamp_rr'] - data['lcamp_ll']
     data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
-
+    data.dropna(subset=['rel_diff'],inplace=True)
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
+    
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
@@ -859,6 +861,7 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
+    data.dropna(subset=['rel_diff'],inplace=True)
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')

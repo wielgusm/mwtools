@@ -857,7 +857,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     return data
 
 
-def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
+def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
 
     data = cl.only_trivial_quadrangles_str(data0, whichB=whichB)
     data=data.copy()
@@ -868,6 +868,12 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     x=np.linspace(-xmax,xmax,128)
     data.dropna(subset=['rel_diff'],inplace=True)
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    if est_sys:
+        s0 = get_systematic(data,'camp','sigmaCA')
+        #print('S0: ',s0)
+        data['corrected'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 + s0**2 )
+        plt.hist(data['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
+
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
     plt.axvline(0,color='k')
@@ -877,8 +883,14 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
-         va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+    #plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+    #     va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+    if est_sys:
+        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
+        va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+    else:
+        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
 
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
@@ -899,6 +911,10 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
             nrowL = int(np.floor(cou/2))
             ncolL = cou%ncols
             ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+            if est_sys:
+                s0 = get_systematic(data[data[by_what]==what],'camp','sigmaCA')
+                data[data[by_what]==what]['corrected'] = np.asarray(data[data[by_what]==what]['camp'])/np.sqrt(np.asarray(data[data[by_what]==what]['sigmaCA'])**2 + s0**2 )
+                ax[nrowL,ncolL].hist(data[data[by_what]==what]['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
             ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
             ax[nrowL,ncolL].grid()
             ax[nrowL,ncolL].axvline(0,color='k')
@@ -908,8 +924,15 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
             mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
             rangey = ax[nrowL,ncolL].get_ylim()
             rangex = ax[nrowL,ncolL].get_xlim()
-            ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+            #ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
             va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+            if est_sys:
+                ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
+                va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+            else:
+                ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+                va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+
             #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
             #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
         plt.show()

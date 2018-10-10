@@ -279,7 +279,7 @@ def compare_uvf_apc(apc_sc,uvf_sc,by_scan_id=False, polarizations=['LL','RR'],ba
     return apc[['datetime','source','expt_no','scan_id','polarization','band','baseline','var_before','var_after','after2before']].copy()
 
 
-def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, polarizations=['LL','RR'],bands=['lo','hi']):
+def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, polarizations=['LL','RR'],bands=['lo','hi'],debias_coh=True,debias_inc=True):
 
     coh0 = coh0[list(map(lambda x: x in polarizations, coh0.polarization))]
     coh00 = coh0[list(map(lambda x: x in bands, coh0.band))].copy()    
@@ -287,8 +287,13 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, po
     incoh00 = incoh0[list(map(lambda x: x in bands, incoh0.band))].copy()
     coh,incoh = ut.match_frames(coh00[coh00.snr>snr_cut].copy(),incoh00[incoh00.snr>snr_cut].copy(),['scan_id','baseline','polarization','band'])
     #print(np.shape(coh),np.shape(incoh))
-    coh['amp_coh'] = np.sqrt(np.maximum(0,coh['amp']**2 - coh['sigma']**2))
-    coh['amp_incoh'] = incoh['amp']
+    if debias_coh==True:
+        coh['amp_coh'] = np.sqrt(np.maximum(0,coh['amp']**2 - coh['sigma']**2))
+    else: coh['amp_coh'] = coh['amp']
+    if debias_inc==True:
+        coh['amp_incoh'] = np.sqrt(np.maximum(0,incoh['amp']**2 - incoh['sigma']**2))
+    else: coh['amp_incoh'] = incoh['amp']
+    
     coh['sigma_coh'] = coh['sigma']
     coh['sigma_incoh'] = incoh['sigma']
     coh['coh2incoh'] = coh['amp_coh']/coh['amp_incoh']
@@ -328,7 +333,6 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, po
             lh.set_alpha(1)
             lh._sizes = [50] 
         plt.show()
-
     return coh[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','snr_coh','snr_incoh']].copy()
 
 

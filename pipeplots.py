@@ -925,7 +925,7 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
             rangey = ax[nrowL,ncolL].get_ylim()
             rangex = ax[nrowL,ncolL].get_xlim()
             #ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
-            va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+            #va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
             if est_sys:
                 ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
                 va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))

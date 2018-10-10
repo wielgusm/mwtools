@@ -918,12 +918,11 @@ def get_systematic(data,absolute,error):
     import scipy.optimize as so
     absolut = np.asarray(data[absolute])
     err = np.asarray(data[error])
-    fun0 = lambda x: np.median( np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449
-    try:
-        s0 = so.brentq(fun0, 0, 10)
-
-        return s0
-    except: return 0
+    print(np.median(np.abs(absolut/np.sqrt(err**2))/0.67449))
+    fun0 = lambda x: np.median( np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
+    print(fun0(0),fun0(10))
+    s0 = so.brentq(fun0, 0, 100)
+    return s0
 
 def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
 

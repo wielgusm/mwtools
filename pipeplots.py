@@ -921,6 +921,7 @@ def get_systematic(data,absolute,error):
     fun0 = lambda x: np.median( np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449
     try:
         s0 = so.brentq(fun0, 0, 10)
+
         return s0
     except: return 0
 
@@ -972,10 +973,10 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
             ncolL = cou%ncols
 
             if est_sys:
-                data_loc= data[data[by_what]==what].copy()
-                s0 = get_systematic(data_loc,'cphase','sigmaCP')
-                data_loc['corrected'] = np.asarray(data_loc['cphase'])/np.sqrt(np.asarray(data_loc['sigmaCP'])**2 + s0**2 )
-                plt.hist(data_loc['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
+                #data= data[data[by_what]==what].copy()
+                s0 = get_systematic(data[data[by_what]==what],'cphase','sigmaCP')
+                data[data[by_what]==what]['corrected'] = np.asarray(data[data[by_what]==what]['cphase'])/np.sqrt(np.asarray(data[data[by_what]==what]['sigmaCP'])**2 + s0**2 )
+                plt.hist(data[data[by_what]==what]['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
 
             ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
             ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')

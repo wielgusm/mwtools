@@ -914,8 +914,17 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source'):
         plt.show()
     return data
 
+def get_systematic(data,absolute,error):
+    import scipy.optimize as so
+    absolut = np.asarray(data[absolute])
+    err = np.asarray(data[error])
+    fun0 = lambda x: np.median( np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449
+    try:
+        s0 = so.brentq(fun0, 0, 10)
+        return s0
+    except: return 0
 
-def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
+def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
 
     data = cl.only_trivial_triangles(data0, whichB=whichB)
     data=data.copy()
@@ -925,6 +934,10 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source'):
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
+    if est_sys:
+        s0 = get_systematic(data,'cphase','sigmaCP')
+        data['corrected'] = np.asarray(data['cphase'])/(np.asarray(data['sigmaCP'])**2 + s0**2 )
+        plt.hist(data['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
     plt.axvline(0,color='k')

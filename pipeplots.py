@@ -936,7 +936,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     if est_sys:
         s0 = get_systematic(data,'cphase','sigmaCP')
-        data['corrected'] = np.asarray(data['cphase'])/(np.asarray(data['sigmaCP'])**2 + s0**2 )
+        data['corrected'] = np.asarray(data['cphase'])/np.sqrt(np.asarray(data['sigmaCP'])**2 + s0**2 )
         plt.hist(data['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
     plt.plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
@@ -947,8 +947,12 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
     rangey = plt.ylim()
     rangex = plt.xlim()
-    plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
-         va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+    if est_sys:
+        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
+        va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+    else:
+        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+        va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
@@ -966,6 +970,13 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
             bins = np.linspace(-xmax,xmax,nbins)
             nrowL = int(np.floor(cou/2))
             ncolL = cou%ncols
+
+            if est_sys:
+                data_loc= data[data[by_what]==what].copy()
+                s0 = get_systematic(data_loc,'cphase','sigmaCP')
+                data_loc['corrected'] = np.asarray(data_loc['cphase'])/np.sqrt(np.asarray(data_loc['sigmaCP'])**2 + s0**2 )
+                plt.hist(data_loc['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
+
             ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
             ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
             ax[nrowL,ncolL].grid()
@@ -976,8 +987,12 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
             mad_rel=np.median(np.abs(data[data[by_what]==what]['rel_diff']))/0.67449
             rangey = ax[nrowL,ncolL].get_ylim()
             rangex = ax[nrowL,ncolL].get_xlim()
-            ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
-            va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+            if est_sys:
+                ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
+                va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
+            else:
+                ax[nrowL,ncolL].text(rangex[1], 0., "MAD: {} deg\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
+                va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
 
             #ax[nrowL,ncolL].text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f deg" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
             #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from __future__ import division
 import numpy as np
 import pandas as pd
@@ -938,7 +939,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
     plt.hist(data['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
     if est_sys:
         s0 = get_systematic(data,'cphase','sigmaCP')
-        print('S0: ',s0)
+        #print('S0: ',s0)
         data['corrected'] = np.asarray(data['cphase'])/np.sqrt(np.asarray(data['sigmaCP'])**2 + s0**2 )
         plt.hist(data['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
     plt.grid()
@@ -973,14 +974,12 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
             bins = np.linspace(-xmax,xmax,nbins)
             nrowL = int(np.floor(cou/2))
             ncolL = cou%ncols
-
+            ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
             if est_sys:
                 #data= data[data[by_what]==what].copy()
                 s0 = get_systematic(data[data[by_what]==what],'cphase','sigmaCP')
                 data[data[by_what]==what]['corrected'] = np.asarray(data[data[by_what]==what]['cphase'])/np.sqrt(np.asarray(data[data[by_what]==what]['sigmaCP'])**2 + s0**2 )
                 ax[nrowL,ncolL].hist(data[data[by_what]==what]['corrected'],bins=bins,histtype='step',linewidth=2,density=True)
-
-            ax[nrowL,ncolL].hist(data[data[by_what]==what]['rel_diff'],bins=bins,histtype='step',linewidth=2,density=True)
             ax[nrowL,ncolL].plot(x,np.exp(-(x)**2/2)/np.sqrt(2.*np.pi),'k')
             ax[nrowL,ncolL].grid()
             ax[nrowL,ncolL].axvline(0,color='k')

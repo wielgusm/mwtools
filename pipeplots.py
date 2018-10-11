@@ -11,21 +11,20 @@ from eat.inspect import closures as cl
 
 dict_col_sour = {'1055+018': 'tan',
      '1749+096': 'crimson',
-     '1921-293': 'mediumblue',
      '3C273': 'lime',
-     '3C279': 'magenta',
+     '3C279': 'orange',
      '3C454.3': 'cyan',
-     '3C84': 'blueviolet',
-     'BLLAC': 'orange',
+     '3C84': 'gold',
+     'BLLAC': 'magenta',
      'CENA': 'darkgreen',
      'CTA102': 'yellow',
-     'J0006-0623': 'tomato', 'J0006-06': 'tomato',
+     'J0006-0623': 'lightblue', 'J0006-06': 'lightblue',
      'J0132-1654': 'olivedrab','J0132-16': 'olivedrab',
      'J1733-1304': 'salmon','J1733-13': 'salmon',
-     'J1924-2914': 'saddlebrown','J1924-29': 'saddlebrown',
+     'J1924-2914': 'saddlebrown','J1924-29': 'saddlebrown', '1921-293': 'saddlebrown',
      'M87': 'k',
      'NGC1052': 'dodgerblue',
-     'OJ287': 'gold',
+     'OJ287': 'blueviolet',
      'SGRA': 'red',
      'CYGX-3': 'silver'}
 
@@ -1236,6 +1235,68 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
             #ax[nrowL,ncolL].text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
         plt.show()
     return data
+
+
+def plot_polgains(data,base):
+    
+    coldic=dict_col_sour
+    foo = data[data['baseline']==base]
+    
+    ####PLOT AMP RATIOS
+    plt.figure(figsize=(14,8))
+    plt.grid()
+    plt.axhline(1,linestyle='--', color='gray')
+    for source in list(foo.source.unique()):
+        foo2 = foo[(foo.source==source)&(foo.AmpRatioErr<2.)]
+        plt.errorbar(foo2.scan_id, foo2.AmpRatio,yerr=foo2.AmpRatioErr,fmt='o',capsize=5,label=source,c=coldic[source])
+    plt.grid()   
+    plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
+    plt.xlim([-10,510])
+    plt.ylabel('R/L amplitude',fontsize=15)
+    plt.xlabel('scan id',fontsize=15)
+    plt.title(base+ ' amp ratio',fontsize=16)
+    plt.grid()
+    plt.show()
+    print('Median amp ratio: ', np.median(foo.AmpRatio))
+    print('Median abs deviation from 1: ', np.median(np.abs(foo.AmpRatio-1.)))
+
+    ####PLOT PHASE OFFSETS
+    plt.figure(figsize=(14,8))
+    plt.grid()
+    plt.axhline(0,linestyle='--', color='gray')
+    for source in list(foo.source.unique()):
+        foo2 = foo[(foo.source==source)&(foo.RLphaseErr<360.)]
+        plt.errorbar(foo2.scan_id, foo2.RLphase,yerr=foo2.RLphaseErr,fmt='o',capsize=5,label=source,c=coldic[source])
+    plt.grid()
+    plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
+    #plt.axis([-10,510,-100,100])
+    plt.xlim([-10,510])
+    plt.ylabel('R-L phase [deg]',fontsize=15)
+    plt.xlabel('scan id',fontsize=15)
+    plt.title(base+ ' phase diff',fontsize=16)
+    plt.grid()
+    plt.show()
+    print('Median phase diff [deg]: ', np.median(foo.RLphase))
+    print('Median abs deviation from 0 [deg]: ', np.median(np.abs(foo.RLphase-0.)))
+    
+    
+def plot_all_polgains(data):
+    
+    sources=list(data.source.unique())
+    baseL=sorted(list(data.baseline.unique()))
+    baseL = [x for x in baseL if 'J' not in x] #JCMT is singlepol
+    #data=data[data.source!='1055+018'] #this one has really crappy gains
+    
+    for base in baseL:
+        print('\n')
+        print('\n')
+        print('=====================================')
+        print('=====================================')
+        print('=================='+base+'=================')
+        print('=====================================')
+        print('=====================================')
+        plot_polgains(data,base)
+
 
 dict_scan_id={'094-2231': 0,
  '094-2242': 1,

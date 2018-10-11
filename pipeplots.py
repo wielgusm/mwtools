@@ -1073,6 +1073,7 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     #plt.text(0.5*rangex[1], 0.7*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
+    print('Comparing {} matched data points'.format(np.shape(p1)[0]))
     print("Median absolute error in % of amplitude: {}".format(100.*np.median(np.abs(data['amp_diff']/data['amp_mean']))))
     print("90th percentile of absolute error in % of amplitude: {}".format(100.*np.percentile(np.abs(data['amp_diff']/data['amp_mean']),90)))
     if by_what!='':
@@ -1140,6 +1141,7 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
 
     plt.show()
+    print('Comparing {} scans'.format(np.shape(data_p1)[0]))
     print("Median absolute error in deg: {}".format(np.median(np.abs(data['cphase_diff']))))
     print("90th percentile of absolute error in deg: {}".format(np.percentile(np.abs(data['cphase_diff']),90)))
     if by_what!='':
@@ -1204,6 +1206,10 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
     #plt.text(0.5*rangex[1], 0.9*rangey[1], "MAD: %4.3f" % mad_abs , bbox=dict(facecolor='white', alpha=1.))
     #plt.text(0.5*rangex[1], 0.8*rangey[1], "REL MAD: %4.3f" % mad_rel , bbox=dict(facecolor='white', alpha=1.))
     plt.show()
+    print('Comparing {} scans'.format(np.shape(data_p1)[0]))
+    print("Median absolute error: {}".format(np.median(np.abs(data['lcamp_diff']))))
+    print("90th percentile of absolute error: {}".format(np.percentile(np.abs(data['lcamp_diff']),90)))
+
     if by_what!='':
         sourceL = sorted(list(data.source.unique()))
         whatL = sorted(list(data[by_what].unique()))

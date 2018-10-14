@@ -398,8 +398,7 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
         plt.show()
     return data
 
-
-def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
+def bandpass_cphase_consistency_prep(data0):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','triangle','polarization'])
     data = data_lo.copy()
@@ -410,6 +409,13 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     data['sigma'] = np.sqrt(data['sigma_lo']**2 + data['sigma_hi']**2)
     data['cphase_diff'] = np.angle(np.exp(1j*(data['cphase_lo'] - data['cphase_hi'])*np.pi/180))*180./np.pi
     data['rel_diff'] = np.asarray(data['cphase_diff'])/np.asarray(data['sigma'])
+
+    return data
+
+
+def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
+
+    data = bandpass_cphase_consistency_prep(data0)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -459,8 +465,7 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
         plt.show()
     return data
 
-
-def polar_cphase_consistency(data0,xmax=10,by_what='source'):
+def polar_cphase_consistency_prep(data0):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','triangle','band'])
     data = data_rr.copy()
@@ -471,6 +476,12 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
     data['sigma'] = np.sqrt(data['sigma_ll']**2 + data['sigma_rr']**2)
     data['cphase_diff'] = np.angle(np.exp(1j*(data['cphase_rr'] - data['cphase_ll'])*np.pi/180))*180./np.pi
     data['rel_diff'] = np.asarray(data['cphase_diff'])/np.asarray(data['sigma'])
+
+    return data
+
+def polar_cphase_consistency(data0,xmax=10,by_what='source'):
+
+    data = polar_cphase_consistency_prep(data0)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -526,8 +537,7 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
     return data
 
 
-
-def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+def bandpass_amplitude_rel_consistency_prep(data0):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
     data = data_lo.copy()
@@ -539,6 +549,13 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     data['amp_diff'] = np.asarray(data['amp_lo']) - np.asarray(data['amp_hi'])
     data['amp_mean'] = 0.5*(np.asarray(data['amp_lo']) + np.asarray(data['amp_hi']))
     data['rel_diff'] = np.asarray(data['amp_diff'])/np.asarray(data['amp_mean'])
+
+    return data
+
+
+def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+
+    data = bandpass_amplitude_rel_consistency_prep(data0)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -596,7 +613,7 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     return data
 
 
-def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
+def polar_amplitude_consistency_prep(data0):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band'])
     data = data_rr.copy()
@@ -607,6 +624,11 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
     data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
     data['amp_diff'] = data['amp_rr'] - data['amp_ll']
     data['rel_diff'] = data['amp_diff']/data['sigma']
+    return data
+
+def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
+
+    data = polar_amplitude_consistency_prep(data0)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -665,7 +687,7 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
     return data
 
 
-def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+def polar_amplitude_rel_consistency_prep(data0):
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','baseline','band'])
     data = data_rr.copy()
@@ -677,6 +699,11 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     data['amp_diff'] = data['amp_rr'] - data['amp_ll']
     data['amp_mean'] = 0.5*(data['amp_rr']+data['amp_ll'])
     data['rel_diff'] = data['amp_diff']/data['amp_mean']
+    return data
+
+def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+
+    data = polar_amplitude_rel_consistency_prep(data0)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
@@ -731,7 +758,7 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
         plt.show()
     return data
 
-def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
+def bandpass_lcamp_consistency_prep(data0):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','quadrangle','polarization'])
     data = data_lo.copy()
@@ -743,6 +770,13 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
     data['lcamp_diff'] = data['lcamp_lo'] - data['lcamp_hi']
     data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
     data.dropna(subset=['rel_diff'],inplace=True)
+
+    return data
+
+def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
+
+    data= bandpass_lcamp_consistency_prep(data0)
+
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
@@ -793,7 +827,26 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
         plt.show()
     return data
 
+def polar_lcamp_consistency_prep(data0):
+
+    data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
+    data = data_rr.copy()
+    data['lcamp_rr'] = data_rr['camp']
+    data['lcamp_ll'] = data_ll['camp']
+    data['sigma_rr'] = data_rr['sigmaCA']
+    data['sigma_ll'] = data_ll['sigmaCA']
+    data['sigma'] = np.sqrt(data['sigma_rr']**2 + data['sigma_ll']**2)
+    data['lcamp_diff'] = data['lcamp_rr'] - data['lcamp_ll']
+    data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
+    data.dropna(subset=['rel_diff'],inplace=True)
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    return data
+
 def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
+
+    data = polar_lcamp_consistency_prep(data0)
 
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
     data = data_rr.copy()
@@ -856,7 +909,16 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     return data
 
 
+def lcamp_prep(data,add_sys=None):
+
+    data['rel_diff'] = np.asarray(data['camp'])/np.asarray(data['sigmaCA'])
+    if add_sys is not None:
+        data['rel_diff_sys'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 +add_sys**2)
+    return data
+
 def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
+
+    data = lcamp_prep(data0)
 
     data = cl.only_trivial_quadrangles_str(data0, whichB=whichB)
     data=data.copy()
@@ -949,11 +1011,21 @@ def get_systematic(data,absolute,error):
     else: s0=0.
     return s0
 
-def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
+
+def cphase_prep(data0,add_sys=None):
+
+    data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])
+    if add_sys is not None:
+        data['rel_diff_sys'] = np.asarray(data['cphase'])/np.sqrt(np.asarray(data['sigmaCP'])**2 +add_sys**2)
+    return data
+
+def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None):
 
     data = cl.only_trivial_triangles(data0, whichB=whichB)
     data=data.copy()
-    data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])
+    #data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])
+    if add_sys is not None:
+        data['rel_diff_sys'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP']**2 +add_sys**2)
 
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)

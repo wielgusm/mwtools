@@ -1013,7 +1013,7 @@ def get_systematic(data,absolute,error):
     return s0
 
 
-def cphase_prep(data0,add_sys=None):
+def cphase_prep(data,add_sys=None):
 
     data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])
     if add_sys is not None:

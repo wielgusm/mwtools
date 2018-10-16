@@ -848,7 +848,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     nbins = int(np.sqrt(np.shape(data)[0]))
     bins = np.linspace(-xmax,xmax,nbins)
     x=np.linspace(-xmax,xmax,128)
-    
+
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
     data = data_rr.copy()
     data['lcamp_rr'] = data_rr['camp']
@@ -917,9 +917,9 @@ def lcamp_prep(data,add_sys=None):
         data['rel_diff_sys'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 +add_sys**2)
     return data
 
-def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False):
+def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None):
 
-    data = lcamp_prep(data0)
+    data = lcamp_prep(data0,add_sys=add_sys)
 
     data = cl.only_trivial_quadrangles_str(data0, whichB=whichB)
     data=data.copy()
@@ -1022,6 +1022,7 @@ def cphase_prep(data0,add_sys=None):
 
 def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None):
 
+    data = cphase_prep(data0,add_sys=add_sys)
     data = cl.only_trivial_triangles(data0, whichB=whichB)
     data=data.copy()
     #data['rel_diff'] = np.asarray(data['cphase'])/np.asarray(data['sigmaCP'])

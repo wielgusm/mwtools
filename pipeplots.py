@@ -839,15 +839,16 @@ def polar_lcamp_consistency_prep(data0):
     data['lcamp_diff'] = data['lcamp_rr'] - data['lcamp_ll']
     data['rel_diff'] = np.asarray(data['lcamp_diff'])/np.asarray(data['sigma'])
     data.dropna(subset=['rel_diff'],inplace=True)
-    nbins = int(np.sqrt(np.shape(data)[0]))
-    bins = np.linspace(-xmax,xmax,nbins)
-    x=np.linspace(-xmax,xmax,128)
     return data
 
 def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
 
     data = polar_lcamp_consistency_prep(data0)
 
+    nbins = int(np.sqrt(np.shape(data)[0]))
+    bins = np.linspace(-xmax,xmax,nbins)
+    x=np.linspace(-xmax,xmax,128)
+    
     data_rr, data_ll = ut.match_frames(data0[data0.polarization=='LL'].copy(),data0[data0.polarization=='RR'].copy(),['scan_id','quadrangle','band'])
     data = data_rr.copy()
     data['lcamp_rr'] = data_rr['camp']

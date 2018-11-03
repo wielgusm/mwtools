@@ -1068,7 +1068,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add
     rangey = plt.ylim()
     rangex = plt.xlim()
     if est_sys:
-        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} \nSYS ERR: {}".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
+        plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} \nSYS ERR: {} deg".format(format(mad_abs,'.4g'),format(mad_rel,'.4g'),format(s0,'.4g')), size=12,
         va="center", ha="right", multialignment="left",bbox=dict(facecolor='white',alpha=0.8))
     else:
         plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,

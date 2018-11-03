@@ -61,6 +61,8 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     print(sour)
     print("{} detections on {} baselines".format(nscan,nbase))
     print("median snr {}".format(np.median(foo.snr)))
+    print("median snr ALMA {}".format(np.median(foo[foo.baseline.str.contains('A')].snr)))
+    print("median snr no ALMA {}".format(np.median(foo[~foo.baseline.str.contains('A')].snr)))
     print("=========================================")
 
     bins = np.logspace(0.5*np.log10(np.min(foo.snr)),1.1*np.log10(np.max(foo.snr)),np.sqrt(nscan))

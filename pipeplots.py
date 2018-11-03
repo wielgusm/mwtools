@@ -50,7 +50,7 @@ palette_dict_rev = {k.split('-')[1]+'-'+k.split('-')[0]:v for k, v in palette_di
 #palette_dict = {**palette_dict, **palette_dict_rev}
 palette_dict = merge_two_dicts(palette_dict, palette_dict_rev)
 
-def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict,yrange=None):
+def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR'], bands=['lo','hi'],palette_dict=palette_dict,yrange=None,xrange=None):
 
     data = data[list(map(lambda x: x in polarizations, data.polarization))]
     data = data[list(map(lambda x: x in bands, data.band))]
@@ -79,6 +79,8 @@ def plot_amp_days(data,sour, bars_on=False,logscale=True,polarizations=['LL','RR
     plt.legend()
     if yrange!=None:
         plt.ylim(yrange)
+    if xrange!=None:
+        plt.xlim(xrange)
     plt.show()
 
     foo['baseline']=list(map(lambda x: Z2SMT[x[0]]+'-'+Z2SMT[x[1]],foo.baseline))

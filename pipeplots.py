@@ -336,7 +336,7 @@ def compare_coherence_time(coh0,incoh0,dict_col_sour=dict_col_sour,snr_cut=0, po
     return coh[['datetime','source','expt_no','scan_id','polarization','band','baseline','amp_coh','amp_incoh','coh2incoh','snr_coh','snr_incoh']].copy()
 
 
-def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
+def bandpass_amplitude_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data_lo, data_hi = ut.match_frames(data0[data0.band=='lo'].copy(),data0[data0.band=='hi'].copy(),['scan_id','baseline','polarization'])
     data = data_lo.copy()
@@ -361,6 +361,8 @@ def bandpass_amplitude_consistency(data0,xmax=10,by_what='source'):
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -413,7 +415,7 @@ def bandpass_cphase_consistency_prep(data0):
     return data
 
 
-def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
+def bandpass_cphase_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data = bandpass_cphase_consistency_prep(data0)
 
@@ -428,6 +430,8 @@ def bandpass_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -479,7 +483,7 @@ def polar_cphase_consistency_prep(data0):
 
     return data
 
-def polar_cphase_consistency(data0,xmax=10,by_what='source'):
+def polar_cphase_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data = polar_cphase_consistency_prep(data0)
 
@@ -494,6 +498,8 @@ def polar_cphase_consistency(data0,xmax=10,by_what='source'):
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MAD: {} deg \nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -553,7 +559,7 @@ def bandpass_amplitude_rel_consistency_prep(data0):
     return data
 
 
-def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source',yrange=None):
 
     data = bandpass_amplitude_rel_consistency_prep(data0)
 
@@ -568,6 +574,8 @@ def bandpass_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -626,7 +634,7 @@ def polar_amplitude_consistency_prep(data0):
     data['rel_diff'] = data['amp_diff']/data['sigma']
     return data
 
-def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
+def polar_amplitude_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data = polar_amplitude_consistency_prep(data0)
 
@@ -643,6 +651,8 @@ def polar_amplitude_consistency(data0,xmax=10,by_what='source'):
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -701,7 +711,7 @@ def polar_amplitude_rel_consistency_prep(data0):
     data['rel_diff'] = data['amp_diff']/data['amp_mean']
     return data
 
-def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
+def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source',yrange=None):
 
     data = polar_amplitude_rel_consistency_prep(data0)
 
@@ -716,6 +726,8 @@ def polar_amplitude_rel_consistency(data0,xmax=2.,by_what='source'):
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -773,7 +785,7 @@ def bandpass_lcamp_consistency_prep(data0):
 
     return data
 
-def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
+def bandpass_lcamp_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data= bandpass_lcamp_consistency_prep(data0)
 
@@ -788,6 +800,8 @@ def bandpass_lcamp_consistency(data0,xmax=10,by_what='source'):
     plt.title('All data')
     mad_abs=np.median(np.abs(data['lcamp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -841,7 +855,7 @@ def polar_lcamp_consistency_prep(data0):
     data.dropna(subset=['rel_diff'],inplace=True)
     return data
 
-def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
+def polar_lcamp_consistency(data0,xmax=10,by_what='source',yrange=None):
 
     data = polar_lcamp_consistency_prep(data0)
 
@@ -871,6 +885,8 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
     plt.title('All data')
     mad_abs=np.median(np.abs(data['lcamp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -912,7 +928,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source'):
 
 def lcamp_prep(data,add_sys=None):
 
-    data['rel_diff'] = np.asarray(data['camp'])/np.asarray(data['sigmaCA'])
+    data['rel_diff'] = np.asarray(data['camp'])/np.asarray(data['sigmaCA'],yrange=None)
     if add_sys is not None:
         data['rel_diff_sys'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 +add_sys**2)
     return data
@@ -943,6 +959,8 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_
     plt.title('All data')
     mad_abs=np.median(np.abs(data['camp']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     #plt.text(rangex[1], 0., "MAD: {}\nREL MAD: {} ".format(format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -1020,7 +1038,7 @@ def cphase_prep(data,add_sys=None):
         data['rel_diff_sys'] = np.asarray(data['cphase'])/np.sqrt(np.asarray(data['sigmaCP'])**2 +add_sys**2)
     return data
 
-def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None):
+def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None,yrange=None):
 
     data = cphase_prep(data0,add_sys=add_sys)
     data = cl.only_trivial_triangles(data0, whichB=whichB)
@@ -1045,6 +1063,8 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add
     plt.title('All data')
     mad_abs=np.median(np.abs(data['cphase']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     if est_sys:
@@ -1102,7 +1122,7 @@ def trivial_cphase(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add
 ############################
 
 
-def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
+def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True,yrange=None):
     if 'sigma' not in pipe1.columns:
         pipe1['sigma'] = pipe1['amp']/pipe1['snr']
     if 'sigma' not in pipe2.columns:
@@ -1139,6 +1159,8 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
     med=np.median((data['amp_diff']))
     mad_abs=np.median(np.abs(data['amp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(xmax, 0.98*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -1184,7 +1206,7 @@ def pipe_amp(pipe1,pipe2,xmax=10.,by_what='source',norm_thermal=True):
         plt.show()
     return data
 
-def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
+def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source',yrange=None):
     data_p1, data_p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','triangle','band','polarization'])
     data = data_p1.copy()
     data['cphase_p1'] = data_p1['cphase']
@@ -1207,6 +1229,8 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
     med=np.median((data['cphase_diff']))
     mad_abs=np.median(np.abs(data['cphase_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(rangex[1], 0., "MED: {} \nMAD: {} deg\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -1248,7 +1272,7 @@ def pipe_cphase(pipe1,pipe2,xmax=10.,by_what='source'):
         plt.show()
     return data
 
-def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
+def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source',yrange=None):
 
     data_p1, data_p2 = ut.match_frames(pipe1.copy(),pipe2.copy(),['scan_id','quadrangle','polarization','band'])
     data = data_p1.copy()
@@ -1272,6 +1296,8 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
     med=np.median((data['lcamp_diff']))
     mad_abs=np.median(np.abs(data['lcamp_diff']))
     mad_rel=np.median(np.abs(data['rel_diff']))/0.67449
+    if yrange!=None:
+        plt.ylim(yrange)
     rangey = plt.ylim()
     rangex = plt.xlim()
     plt.text(0.98*xmax, 0.98*rangey[1], "MED: {} \nMAD: {}\nREL MAD: {} ".format(format(med,'.4g'),format(mad_abs,'.4g'),format(mad_rel,'.4g')), size=12,
@@ -1317,7 +1343,7 @@ def pipe_lcamp(pipe1,pipe2,xmax=10.,by_what='source'):
     return data
 
 
-def plot_polgains(data,base):
+def plot_polgains(data,base,yrangeA=None,yrangeP=None):
     
     coldic=dict_col_sour
     foo = data[data['baseline']==base]
@@ -1332,6 +1358,8 @@ def plot_polgains(data,base):
     plt.grid()   
     plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
     plt.xlim([-10,510])
+    if yrangeA!=None:
+        plt.ylim(yrangeA)
     plt.ylabel('R/L amplitude',fontsize=15)
     plt.xlabel('scan id',fontsize=15)
     plt.title(base+ ' amp ratio',fontsize=16)
@@ -1351,6 +1379,8 @@ def plot_polgains(data,base):
     plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
     #plt.axis([-10,510,-100,100])
     plt.xlim([-10,510])
+    if yrangeP!=None:
+        plt.ylim(yrangeP)
     plt.ylabel('R-L phase [deg]',fontsize=15)
     plt.xlabel('scan id',fontsize=15)
     plt.title(base+ ' phase diff',fontsize=16)

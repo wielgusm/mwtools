@@ -938,7 +938,7 @@ def lcamp_prep(data,add_sys=None):
         data['rel_diff_sys'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 +add_sys**2)
     return data
 
-def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None):
+def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_sys=None,yrange=None):
 
     data = lcamp_prep(data0,add_sys=add_sys)
 

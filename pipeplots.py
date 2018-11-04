@@ -933,7 +933,7 @@ def polar_lcamp_consistency(data0,xmax=10,by_what='source',yrange=None):
 
 def lcamp_prep(data,add_sys=None):
 
-    data['rel_diff'] = np.asarray(data['camp'])/np.asarray(data['sigmaCA'],yrange=None)
+    data['rel_diff'] = np.asarray(data['camp'])/np.asarray(data['sigmaCA'])
     if add_sys is not None:
         data['rel_diff_sys'] = np.asarray(data['camp'])/np.sqrt(np.asarray(data['sigmaCA'])**2 +add_sys**2)
     return data

@@ -1395,7 +1395,7 @@ def plot_polgains(data,base,yrangeA=None,yrangeP=None):
     print('Median abs deviation from 0 [deg]: ', np.median(np.abs(foo.RLphase-0.)))
     
     
-def plot_all_polgains(data):
+def plot_all_polgains(data,yrangeA=None,yrangeP=None):
     
     sources=list(data.source.unique())
     baseL=sorted(list(data.baseline.unique()))
@@ -1410,7 +1410,7 @@ def plot_all_polgains(data):
         print('=================='+base+'=================')
         print('=====================================')
         print('=====================================')
-        plot_polgains(data,base)
+        plot_polgains(data,base,yrangeA=None,yrangeP=None)
 
 
 dict_scan_id={'094-2231': 0,

@@ -1460,7 +1460,22 @@ def plot_bandgains(data,base,yrangeA=None,yrangeP=None):
     print('Median abs deviation from 0 [deg]: ', np.median(np.abs(foo.LOHIphase-0.)))
 
 
-
+def plot_all_bandgains(data,yrangeA=None,yrangeP=None):
+    
+    sources=list(data.source.unique())
+    baseL=sorted(list(data.baseline.unique()))
+    baseL = [x for x in baseL if 'J' not in x] #JCMT is singlepol
+    #data=data[data.source!='1055+018'] #this one has really crappy gains
+    
+    for base in baseL:
+        print('\n')
+        print('\n')
+        print('=====================================')
+        print('=====================================')
+        print('=================='+base+'=================')
+        print('=====================================')
+        print('=====================================')
+        plot_bandgains(data,base,yrangeA=None,yrangeP=None)
 
 dict_scan_id={'094-2231': 0,
  '094-2242': 1,

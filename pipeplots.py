@@ -1413,6 +1413,55 @@ def plot_all_polgains(data,yrangeA=None,yrangeP=None):
         plot_polgains(data,base,yrangeA=None,yrangeP=None)
 
 
+def plot_bandgains(data,base,yrangeA=None,yrangeP=None):
+    
+    coldic=dict_col_sour
+    foo = data[data['baseline']==base]
+    
+    ####PLOT AMP RATIOS
+    plt.figure(figsize=(14,8))
+    plt.grid()
+    plt.axhline(1,linestyle='--', color='gray')
+    for source in list(foo.source.unique()):
+        foo2 = foo[(foo.source==source)&(foo.AmpRatioErr<2.)]
+        plt.errorbar(foo2.scan_id, foo2.AmpRatio,yerr=foo2.AmpRatioErr,fmt='o',capsize=5,label=source,c=coldic[source])
+    plt.grid()   
+    plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
+    plt.xlim([-10,510])
+    if yrangeA!=None:
+        plt.ylim(yrangeA)
+    plt.ylabel('LO / HI amplitude',fontsize=15)
+    plt.xlabel('scan id',fontsize=15)
+    plt.title(base+ ' amp ratio',fontsize=16)
+    plt.grid()
+    plt.show()
+    print('Median amp ratio: ', np.median(foo.AmpRatio))
+    print('Median abs deviation from 1: ', np.median(np.abs(foo.AmpRatio-1.)))
+
+    ####PLOT PHASE OFFSETS
+    plt.figure(figsize=(14,8))
+    plt.grid()
+    plt.axhline(0,linestyle='--', color='gray')
+    for source in list(foo.source.unique()):
+        foo2 = foo[(foo.source==source)&(foo.LOHIphaseErr<360.)]
+        plt.errorbar(foo2.scan_id, foo2.LOHIphase,yerr=foo2.LOHIphaseErr,fmt='o',capsize=5,label=source,c=coldic[source])
+    plt.grid()
+    plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1.))
+    #plt.axis([-10,510,-100,100])
+    plt.xlim([-10,510])
+    if yrangeP!=None:
+        plt.ylim(yrangeP)
+    plt.ylabel('LO-HI phase [deg]',fontsize=15)
+    plt.xlabel('scan id',fontsize=15)
+    plt.title(base+ ' phase diff',fontsize=16)
+    plt.grid()
+    plt.show()
+    print('Median phase diff [deg]: ', np.median(foo.LOHIphase))
+    print('Median abs deviation from 0 [deg]: ', np.median(np.abs(foo.LOHIphase-0.)))
+
+
+
+
 dict_scan_id={'094-2231': 0,
  '094-2242': 1,
  '094-2253': 2,

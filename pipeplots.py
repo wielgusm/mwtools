@@ -1464,7 +1464,7 @@ def plot_all_bandgains(data,yrangeA=None,yrangeP=None):
     
     sources=list(data.source.unique())
     baseL=sorted(list(data.baseline.unique()))
-    baseL = [x for x in baseL if 'J' not in x] #JCMT is singlepol
+    #baseL = [x for x in baseL if 'J' not in x] #JCMT is singlepol
     #data=data[data.source!='1055+018'] #this one has really crappy gains
     
     for base in baseL:

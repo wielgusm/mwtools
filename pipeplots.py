@@ -1410,7 +1410,7 @@ def plot_all_polgains(data,yrangeA=None,yrangeP=None):
         print('=================='+base+'=================')
         print('=====================================')
         print('=====================================')
-        plot_polgains(data,base,yrangeA=None,yrangeP=None)
+        plot_polgains(data,base,yrangeA=yrangeA,yrangeP=yrangeP)
 
 
 def plot_bandgains(data,base,yrangeA=None,yrangeP=None):
@@ -1475,7 +1475,7 @@ def plot_all_bandgains(data,yrangeA=None,yrangeP=None):
         print('=================='+base+'=================')
         print('=====================================')
         print('=====================================')
-        plot_bandgains(data,base,yrangeA=None,yrangeP=None)
+        plot_bandgains(data,base,yrangeA=yrangeA,yrangeP=yrangeP)
 
 dict_scan_id={'094-2231': 0,
  '094-2242': 1,

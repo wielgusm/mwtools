@@ -1033,7 +1033,7 @@ def get_systematic(data,absolute,error,subtract_median=False):
         m0 = np.median(np.abs(absolut/np.sqrt(err**2))/0.67449)
     if m0>1.:
         if subtract_median:
-            fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2)) - np.median(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
+            fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2) - np.median(absolut/np.sqrt(err**2 + x**2)) ))/0.67449 -1.
         else:
             fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
         #print(fun0(0),fun0(10))

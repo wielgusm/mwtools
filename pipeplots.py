@@ -1037,7 +1037,8 @@ def get_systematic(data,absolute,error,subtract_median=False):
         else:
             fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
         #print(fun0(0),fun0(10))
-        s0 = so.brentq(fun0, 0, 100)
+        try: s0 = so.brentq(fun0, 0, 100)
+        except ValueError: s0=0
     else: s0=0.
     return s0
 

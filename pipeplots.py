@@ -1023,13 +1023,19 @@ def trivial_lcamp(data0,xmax=10,whichB='all',by_what='source',est_sys=False,add_
         plt.show()
     return data
 
-def get_systematic(data,absolute,error):
+def get_systematic(data,absolute,error,subtract_median=False):
     import scipy.optimize as so
     absolut = np.asarray(data[absolute])
     err = np.asarray(data[error])
-    m0 = np.median(np.abs(absolut/np.sqrt(err**2))/0.67449)
+    if subtract_median:
+        m0 = np.median(np.abs(absolut/np.sqrt(err**2) -  np.median(absolut/np.sqrt(err**2)) )/0.67449)
+    else:
+        m0 = np.median(np.abs(absolut/np.sqrt(err**2))/0.67449)
     if m0>1.:
-        fun0 = lambda x: np.median( np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
+        if subtract_median:
+            fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2)) - np.median(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
+        else:
+            fun0 = lambda x: np.median(np.abs(absolut/np.sqrt(err**2 + x**2)) )/0.67449 -1.
         #print(fun0(0),fun0(10))
         s0 = so.brentq(fun0, 0, 100)
     else: s0=0.
